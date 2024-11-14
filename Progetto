@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco Capodanno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 32px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 8px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #points {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        #challenge-container {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="start-screen">
+        <h1>Benvenuto al Gioco di Capodanno!</h1>
+        <p>Scegli il tuo personaggio per iniziare a giocare:</p>
+        <div>
+            <button class="button" onclick="selectCharacter('Angelo')">Angelo</button>
+            <button class="button" onclick="selectCharacter('Matilde')">Matilde</button>
+            <button class="button" onclick="selectCharacter('Eleonora')">Eleonora</button>
+            <button class="button" onclick="selectCharacter('Rita')">Rita</button>
+            <button class="button" onclick="selectCharacter('Federico')">Federico</button>
+            <button class="button" onclick="selectCharacter('Rebecca')">Rebecca</button>
+            <button class="button" onclick="selectCharacter('Alessandro')">Alessandro</button>
+            <button class="button" onclick="selectCharacter('Francesco')">Francesco</button>
+            <button class="button" onclick="selectCharacter('Giulia')">Giulia</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="game-screen">
+        <h2 id="character-name"></h2>
+        <p>Seleziona la tua azione:</p>
+        <button class="button" onclick="acceptChallenge()">Accetta la sfida</button>
+        <button class="button" onclick="refuseChallenge()">Rifiuta la sfida</button>
+        <button class="button" onclick="destinyChallenge()">Il destino è nelle tue mani</button>
+    </div>
+
+    <div class="container hidden" id="challenge-screen">
+        <h3 id="challenge-title"></h3>
+        <p id="challenge-description"></p>
+        <button class="button" onclick="completeChallenge()">Completa la sfida</button>
+        <button class="button" onclick="changeChallenge()">Cambia sfida</button>
+    </div>
+
+    <div id="points" class="hidden">
+        <p>Punti accumulati: <span id="points-value">0</span> Dollari Lonziani</p>
+    </div>
+
+    <script>
+        let character = '';
+        let points = 0;
+        let challengeList = {
+            accept: [
+                "Canta una canzone famosa",
+                "Fai una coreografia improvvisata",
+                "Imita un animale per 1 minuto",
+                "Racconta una barzelletta",
+                "Crea una poesia improvvisata"
+            ],
+            refuse: [
+                "Fai 10 flessioni",
+                "Tieniti in equilibrio su un piede per 30 secondi",
+                "Fai 5 salti mortali",
+                "Canta in modo esagerato",
+                "Fai una dichiarazione d'amore"
+            ],
+            destiny: [
+                "Racconta la tua giornata come se fosse un film d'azione",
+                "Fai un discorso motivazionale su un oggetto random",
+                "Imita un politico famoso per 1 minuto",
+                "Fai un balletto pazzo e improvvisato",
+                "Leggi una poesia di 3 righe con grande passione"
+            ]
+        };
+
+        function selectCharacter(name) {
+            character = name;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('character-name').innerText = `Ciao ${character}, scegli la tua azione!`;
+        }
+
+        function acceptChallenge() {
+            showChallenge('accept');
+        }
+
+        function refuseChallenge() {
+            showChallenge('refuse');
+        }
+
+        function destinyChallenge() {
+            showChallenge('destiny');
+        }
+
+        function showChallenge(type) {
+            const challenge = getRandomChallenge(type);
+            document.getElementById('challenge-title').innerText = `Sfida: ${challenge}`;
+            document.getElementById('challenge-description').innerText = `Sei pronto a completarla?`;
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('challenge-screen').classList.remove('hidden');
+        }
+
+        function completeChallenge() {
+            points += 10;
+            document.getElementById('points-value').innerText = points;
+            document.getElementById('points').classList.remove('hidden');
+            document.getElementById('challenge-screen').classList.add('hidden');
+        }
+
+        function changeChallenge() {
+            document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+        }
+
+        function getRandomChallenge(type) {
+            const challenges = challengeList[type];
+            const randomIndex = Math.floor(Math.random() * challenges.length);
+            return challenges[randomIndex];
+        }
+    </script>
+</body>
+</html>
