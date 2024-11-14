@@ -40,26 +40,35 @@
         #challenge-container {
             margin-top: 30px;
         }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 8px;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
 
-       <div class="container">
-        <div id="points">Punti: 0</div> 
-        <h1>Benvenuto/a</h1>
-        <p>Scegli il tuo personaggio e inizia a giocare:</p>
-        <select id="personaggio">
-            <option value="">-- Seleziona Personaggio --</option>
-            <option value="Francesco">Francesco</option>
-            <option value="Rita">Rita</option>
-            <option value="Giulia">Giulia</option>
-            <option value="Matilde">Matilde</option>
+    <div class="container" id="start-screen">
+        <h1>Benvenuto al Gioco di Capodanno!</h1>
+        <p>Scegli il tuo personaggio per iniziare a giocare:</p>
+        <select id="character-select">
             <option value="Angelo">Angelo</option>
-            <option value="Rebecca">Rebecca</option>
+            <option value="Matilde">Matilde</option>
             <option value="Eleonora">Eleonora</option>
+            <option value="Rita">Rita</option>
             <option value="Federico">Federico</option>
+            <option value="Rebecca">Rebecca</option>
             <option value="Alessandro">Alessandro</option>
+            <option value="Francesco">Francesco</option>
+            <option value="Giulia">Giulia</option>
         </select>
+        <br>
+        <button class="button" onclick="selectCharacter()">Inizia il gioco</button>
+    </div>
+
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
         <p>Seleziona la tua azione:</p>
@@ -106,8 +115,8 @@
             ]
         };
 
-        function selectCharacter(name) {
-            character = name;
+        function selectCharacter() {
+            character = document.getElementById('character-select').value;
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             document.getElementById('character-name').innerText = `Ciao ${character}, scegli la tua azione!`;
@@ -138,6 +147,7 @@
             document.getElementById('points-value').innerText = points;
             document.getElementById('points').classList.remove('hidden');
             document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
         }
 
         function changeChallenge() {
