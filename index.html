@@ -13,23 +13,49 @@
             padding: 20px;
         }
         .button {
-            background-color: #4CAF50;
             color: white;
             border: none;
             padding: 15px 32px;
             font-size: 18px;
             cursor: pointer;
-            margin: 10px;
+            margin: 10px 0;
             border-radius: 8px;
+            width: 100%;
         }
         .button:hover {
-            background-color: #45a049;
+            opacity: 0.8;
+        }
+        .button.accept {
+            background-color: #4CAF50; /* Verde */
+        }
+        .button.refuse {
+            background-color: #FF5722; /* Arancione */
+        }
+        .button.destiny {
+            background-color: #3F51B5; /* Blu */
         }
         .button.red {
             background-color: #f44336;
         }
         .button.red:hover {
             background-color: #e53935;
+        }
+        .button.circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #3F51B5;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .hidden {
             display: none;
@@ -52,6 +78,34 @@
             margin: 10px;
             border-radius: 8px;
             width: 200px;
+        }
+        #regulation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        #regulation-modal .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 80%;
+            text-align: left;
+        }
+        #regulation-modal .close {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -78,9 +132,9 @@
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
         <p>Seleziona la tua azione:</p>
-        <button class="button" onclick="acceptChallenge()">Accetta la sfida</button>
-        <button class="button" onclick="refuseChallenge()">Rifiuta la sfida</button>
-        <button class="button" onclick="destinyChallenge()">Il destino è nelle tue mani</button>
+        <button class="button accept" onclick="acceptChallenge()">Accetta la sfida</button>
+        <button class="button refuse" onclick="refuseChallenge()">Rifiuta la sfida</button>
+        <button class="button destiny" onclick="destinyChallenge()">Il destino è nelle tue mani</button>
     </div>
 
     <div class="container hidden" id="challenge-screen">
@@ -92,6 +146,25 @@
 
     <div id="points" class="hidden">
         <p>Punti accumulati: <span id="points-value">0</span> Dollari Lonziani</p>
+    </div>
+
+    <!-- Cerchietto per il regolamento -->
+    <button class="button circle" onclick="showRegulation()">?</button>
+
+    <!-- Finestra modale per il regolamento -->
+    <div id="regulation-modal" class="hidden">
+        <div class="modal-content">
+            <h3>Regolamento del Gioco</h3>
+            <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili. Il nome del personaggio scelto influenzerà le sfide.</p>
+            <p><strong>2. Tipi di sfide</strong>: Ogni giocatore ha tre possibilità: 
+                <br> - "Accetta la sfida" porta a una sfida media
+                <br> - "Rifiuta la sfida" porta a una sfida più semplice
+                <br> - "Il destino è nelle tue mani" è una sfida difficile, ma ricompensata.
+            </p>
+            <p><strong>3. Punteggio</strong>: Ogni sfida superata guadagna punti, e accumulando 50 punti si vince il gioco! Ogni sfida ha un punteggio differente a seconda del tipo (5, 2 o 10 dollari lonziani).</p>
+            <p><strong>4. Punti accumulati</strong>: I punti vengono mostrati in tempo reale durante il gioco. Tieni traccia dei tuoi progressi e cerca di arrivare per primo a 50 Dollari Lonziani!</p>
+            <button class="close" onclick="closeRegulation()">Chiudi</button>
+        </div>
     </div>
 
     <script>
@@ -179,6 +252,16 @@
             const challenges = challengeList[type];
             const randomIndex = Math.floor(Math.random() * challenges.length);
             return challenges[randomIndex];
+        }
+
+        // Funzione per mostrare il regolamento
+        function showRegulation() {
+            document.getElementById('regulation-modal').classList.remove('hidden');
+        }
+
+        // Funzione per chiudere la finestra modale
+        function closeRegulation() {
+            document.getElementById('regulation-modal').classList.add('hidden');
         }
     </script>
 </body>
