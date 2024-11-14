@@ -25,6 +25,12 @@
         .button:hover {
             background-color: #45a049;
         }
+        .button.red {
+            background-color: #f44336;
+        }
+        .button.red:hover {
+            background-color: #e53935;
+        }
         .hidden {
             display: none;
         }
@@ -81,7 +87,7 @@
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
         <button class="button" onclick="completeChallenge()">Completa la sfida</button>
-        <button class="button" onclick="changeChallenge()">Cambia sfida</button>
+        <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
     </div>
 
     <div id="points" class="hidden">
