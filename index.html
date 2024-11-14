@@ -54,7 +54,6 @@
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
-        <!-- Selezione del personaggio tramite un menu a tendina -->
         <select id="character-select">
             <option value="Angelo">Angelo</option>
             <option value="Matilde">Matilde</option>
@@ -81,7 +80,7 @@
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
-        <button class="button" onclick="completeChallenge(5)">Completa la sfida (5 Punti)</button>
+        <button class="button" onclick="completeChallenge()">Completa la sfida</button>
         <button class="button" onclick="changeChallenge()">Cambia sfida</button>
     </div>
 
@@ -93,6 +92,7 @@
         let character = '';
         let points = 0;
         let currentChallengeType = '';
+        let currentChallenge = {};
 
         const challengeList = {
             accept: [
@@ -129,31 +129,33 @@
         // Funzioni per le diverse azioni (Accetta, Rifiuta, Destino)
         function acceptChallenge() {
             currentChallengeType = 'accept';
-            showChallenge('accept');
+            currentChallenge = getRandomChallenge('accept');
+            showChallenge();
         }
 
         function refuseChallenge() {
             currentChallengeType = 'refuse';
-            showChallenge('refuse');
+            currentChallenge = getRandomChallenge('refuse');
+            showChallenge();
         }
 
         function destinyChallenge() {
             currentChallengeType = 'destiny';
-            showChallenge('destiny');
+            currentChallenge = getRandomChallenge('destiny');
+            showChallenge();
         }
 
         // Funzione per mostrare la sfida
-        function showChallenge(type) {
-            const challenge = getRandomChallenge(type);
-            document.getElementById('challenge-title').innerText = `Sfida: ${challenge.challenge}`;
+        function showChallenge() {
+            document.getElementById('challenge-title').innerText = `Sfida: ${currentChallenge.challenge}`;
             document.getElementById('challenge-description').innerText = `Sei pronto a completarla?`;
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('challenge-screen').classList.remove('hidden');
         }
 
         // Completamento della sfida e accumulo dei punti
-        function completeChallenge(pointsAwarded) {
-            points += pointsAwarded;
+        function completeChallenge() {
+            points += currentChallenge.points;
             document.getElementById('points-value').innerText = points;
             document.getElementById('points').classList.remove('hidden');
             document.getElementById('challenge-screen').classList.add('hidden');
