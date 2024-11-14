@@ -81,7 +81,7 @@
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
-        <button class="button" onclick="completeChallenge()">Completa la sfida</button>
+        <button class="button" onclick="completeChallenge(5)">Completa la sfida (5 Punti)</button>
         <button class="button" onclick="changeChallenge()">Cambia sfida</button>
     </div>
 
@@ -92,27 +92,29 @@
     <script>
         let character = '';
         let points = 0;
-        let challengeList = {
+        let currentChallengeType = '';
+
+        const challengeList = {
             accept: [
-                "Canta una canzone famosa",
-                "Fai una coreografia improvvisata",
-                "Imita un animale per 1 minuto",
-                "Racconta una barzelletta",
-                "Crea una poesia improvvisata"
+                { challenge: "Canta una canzone famosa", points: 5 },
+                { challenge: "Fai una coreografia improvvisata", points: 5 },
+                { challenge: "Imita un animale per 1 minuto", points: 5 },
+                { challenge: "Racconta una barzelletta", points: 5 },
+                { challenge: "Crea una poesia improvvisata", points: 5 }
             ],
             refuse: [
-                "Fai 10 flessioni",
-                "Tieniti in equilibrio su un piede per 30 secondi",
-                "Fai 5 salti mortali",
-                "Canta in modo esagerato",
-                "Fai una dichiarazione d'amore"
+                { challenge: "Fai 10 flessioni", points: 2 },
+                { challenge: "Tieniti in equilibrio su un piede per 30 secondi", points: 2 },
+                { challenge: "Fai 5 salti mortali", points: 2 },
+                { challenge: "Canta in modo esagerato", points: 2 },
+                { challenge: "Fai una dichiarazione d'amore", points: 2 }
             ],
             destiny: [
-                "Racconta la tua giornata come se fosse un film d'azione",
-                "Fai un discorso motivazionale su un oggetto random",
-                "Imita un politico famoso per 1 minuto",
-                "Fai un balletto pazzo e improvvisato",
-                "Leggi una poesia di 3 righe con grande passione"
+                { challenge: "Racconta la tua giornata come se fosse un film d'azione", points: 10 },
+                { challenge: "Fai un discorso motivazionale su un oggetto random", points: 10 },
+                { challenge: "Imita un politico famoso per 1 minuto", points: 10 },
+                { challenge: "Fai un balletto pazzo e improvvisato", points: 10 },
+                { challenge: "Leggi una poesia di 3 righe con grande passione", points: 10 }
             ]
         };
 
@@ -126,29 +128,32 @@
 
         // Funzioni per le diverse azioni (Accetta, Rifiuta, Destino)
         function acceptChallenge() {
+            currentChallengeType = 'accept';
             showChallenge('accept');
         }
 
         function refuseChallenge() {
+            currentChallengeType = 'refuse';
             showChallenge('refuse');
         }
 
         function destinyChallenge() {
+            currentChallengeType = 'destiny';
             showChallenge('destiny');
         }
 
         // Funzione per mostrare la sfida
         function showChallenge(type) {
             const challenge = getRandomChallenge(type);
-            document.getElementById('challenge-title').innerText = `Sfida: ${challenge}`;
+            document.getElementById('challenge-title').innerText = `Sfida: ${challenge.challenge}`;
             document.getElementById('challenge-description').innerText = `Sei pronto a completarla?`;
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('challenge-screen').classList.remove('hidden');
         }
 
-        // Completamento della sfida
-        function completeChallenge() {
-            points += 10;
+        // Completamento della sfida e accumulo dei punti
+        function completeChallenge(pointsAwarded) {
+            points += pointsAwarded;
             document.getElementById('points-value').innerText = points;
             document.getElementById('points').classList.remove('hidden');
             document.getElementById('challenge-screen').classList.add('hidden');
