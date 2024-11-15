@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gioco Capodanno</title>
     <style>
-            body {
+        body {
             font-family: Arial, sans-serif;
-            background-color: #ffe5d9; /* Colore sfondo */
+            background-color: #d0f0fd; /* Nuovo colore sfondo: blu tenue */
             color: #333;
             text-align: center;
             padding: 20px;
@@ -56,6 +56,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .button.start {
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Sfumatura */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .button.start:hover {
+            background: linear-gradient(to right, #feb47b, #ff7e5f);
+            transform: scale(1.05); /* Ingrandimento al passaggio del mouse */
         }
         .hidden {
             display: none;
@@ -126,7 +141,7 @@
             <option value="Giulia">Giulia</option>
         </select>
         <br>
-        <button class="button" onclick="selectCharacter()">Inizia il gioco</button>
+        <button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
     </div>
 
     <div class="container hidden" id="game-screen">
@@ -197,71 +212,76 @@
             ]
         };
 
-        // Selezione del personaggio
         function selectCharacter() {
-            character = document.getElementById('character-select').value;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('character-name').innerText = `Ciao ${character}, scegli la tua azione!`;
+            character = document.getElementById("character-select").value;
+            document.getElementById("character-name").innerText = `Stai giocando come: ${character}`;
+            document.getElementById("start-screen").classList.add("hidden");
+            document.getElementById("game-screen").classList.remove("hidden");
+            document.getElementById("points").classList.remove("hidden");
         }
 
-        // Funzioni per le diverse azioni (Accetta, Rifiuta, Destino)
         function acceptChallenge() {
-            currentChallengeType = 'accept';
-            currentChallenge = getRandomChallenge('accept');
-            showChallenge();
+            startChallenge("accept");
         }
 
         function refuseChallenge() {
-            currentChallengeType = 'refuse';
-            currentChallenge = getRandomChallenge('refuse');
-            showChallenge();
+            startChallenge("refuse");
         }
 
         function destinyChallenge() {
-            currentChallengeType = 'destiny';
-            currentChallenge = getRandomChallenge('destiny');
-            showChallenge();
+            startChallenge("destiny");
         }
 
-        // Funzione per mostrare la sfida
-        function showChallenge() {
-            document.getElementById('challenge-title').innerText = `Sfida: ${currentChallenge.challenge}`;
-            document.getElementById('challenge-description').innerText = `Sei pronto a completarla?`;
-            document.getElementById('game-screen').classList.add('hidden');
-            document.getElementById('challenge-screen').classList.remove('hidden');
+        function startChallenge(type) {
+            currentChallengeType = type;
+            const challenges = challengeList[type];
+            currentChallenge = challenges[Math.floor(Math.random() * challenges.length)];
+            document.getElementById("challenge-title").innerText = `Sfida: ${currentChallenge.challenge}`;
+            document.getElementById("challenge-description").innerText = `Punti in palio: ${currentChallenge.points}`;
+            document.getElementById("game-screen").classList.add("hidden");
+            document.getElementById("challenge-screen").classList.remove("hidden");
         }
 
-        // Completamento della sfida e accumulo dei punti
         function completeChallenge() {
             points += currentChallenge.points;
-            document.getElementById('points-value').innerText = points;
-            document.getElementById('points').classList.remove('hidden');
-            document.getElementById('challenge-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById("points-value").innerText = points;
+            checkWinCondition();
+            resetToGameScreen();
         }
 
-        // Cambia sfida
         function changeChallenge() {
-            document.getElementById('challenge-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
+            startChallenge(currentChallengeType);
         }
 
-        // Funzione per ottenere una sfida random
-        function getRandomChallenge(type) {
-            const challenges = challengeList[type];
-            const randomIndex = Math.floor(Math.random() * challenges.length);
-            return challenges[randomIndex];
+        function resetToGameScreen() {
+            document.getElementById("challenge-screen").classList.add("hidden");
+            document.getElementById("game-screen").classList.remove("hidden");
         }
 
-        // Funzione per mostrare il regolamento
+        function checkWinCondition() {
+            if (points >= 50) {
+                alert(`Complimenti! Hai vinto con ${points} Dollari Lonziani!`);
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            points = 0;
+            character = '';
+            currentChallengeType = '';
+            currentChallenge = {};
+            document.getElementById("points-value").innerText = points;
+            document.getElementById("start-screen").classList.remove("hidden");
+            document.getElementById("game-screen").classList.add("hidden");
+            document.getElementById("challenge-screen").classList.add("hidden");
+        }
+
         function showRegulation() {
-            document.getElementById('regulation-modal').classList.remove('hidden');
+            document.getElementById("regulation-modal").style.display = "flex";
         }
 
-        // Funzione per chiudere la finestra modale
         function closeRegulation() {
-            document.getElementById('regulation-modal').classList.add('hidden');
+            document.getElementById("regulation-modal").style.display = "none";
         }
     </script>
 </body>
