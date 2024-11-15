@@ -142,6 +142,7 @@
         <br>
         <button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
     </div>
+
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
         <p>Scegli la tua azione:</p>
@@ -149,17 +150,21 @@
         <button class="button refuse" onclick="refuseChallenge()">Rifiuta la sfida</button>
         <button class="button destiny" onclick="destinyChallenge()">Il destino è nelle tue mani</button>
     </div>
+
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
         <button class="button" onclick="completeChallenge()">Completa la sfida</button>
         <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
     </div>
+
     <div id="points" class="hidden">
         <p>Punti accumulati: <span id="points-value">0</span> Dollari Lonziani</p>
     </div>
+
     <!-- Cerchietto per il regolamento -->
     <button class="button circle" onclick="showRegulation()">?</button>
+
     <!-- Finestra modale per il regolamento -->
     <div id="regulation-modal" class="hidden">
         <div class="modal-content">
@@ -196,6 +201,7 @@
                 { challenge: "Fai una dichiarazione d'amore", points: 2 }
             ],
             destiny: [
+                { challenge: "Parla come se fossi un robot per 2 minuti", points: 10 },
                 { challenge: "Racconta la tua storia più imbarazzante", points: 10 },
                 { challenge: "Crea un rap su Capodanno", points: 10 },
                 { challenge: "Fai il discorso più lungo del mondo", points: 10 },
@@ -245,10 +251,13 @@
             document.getElementById('points-value').innerText = points;
             document.getElementById('challenge-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('points').classList.remove('hidden');
         }
 
         function changeChallenge() {
-            loadChallenge();
+            document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('points').classList.remove('hidden');
         }
 
         function showRegulation() {
