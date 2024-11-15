@@ -57,6 +57,9 @@
             align-items: center;
             justify-content: center;
         }
+        .hidden {
+            display: none;
+        }
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -83,9 +86,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
             z-index: 1000;
-            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -97,9 +99,6 @@
             width: 80%;
             text-align: left;
         }
-        #regulation-modal h3 {
-            margin-top: 0;
-        }
         #regulation-modal .close {
             background-color: red;
             color: white;
@@ -107,8 +106,6 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 10px;
-            display: inline-block;
         }
     </style>
 </head>
@@ -140,32 +137,131 @@
         <button class="button destiny" onclick="destinyChallenge()">Il destino è nelle tue mani</button>
     </div>
 
-    <!-- Regolamento -->
+    <div class="container hidden" id="challenge-screen">
+        <h3 id="challenge-title"></h3>
+        <p id="challenge-description"></p>
+        <button class="button" onclick="completeChallenge()">Completa la sfida</button>
+        <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
+    </div>
+
+    <div id="points" class="hidden">
+        <p>Punti accumulati: <span id="points-value">0</span> Dollari Lonziani</p>
+    </div>
+
+    <!-- Cerchietto per il regolamento -->
     <button class="button circle" onclick="showRegulation()">?</button>
 
-    <div id="regulation-modal">
+    <!-- Finestra modale per il regolamento -->
+    <div id="regulation-modal" class="hidden">
         <div class="modal-content">
             <h3>Regolamento del Gioco</h3>
-            <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili.</p>
-            <p><strong>2. Tre opzioni di gioco</strong>: 
-                <br>- "Accetta la sfida" (Sfida media, 5 Dollari Lonziani)
-                <br>- "Rifiuta la sfida" (Sfida semplice, 2 Dollari Lonziani)
-                <br>- "Il destino è nelle tue mani" (Sfida difficile, 10 Dollari Lonziani).
+            <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili. Il nome del personaggio scelto influenzerà le sfide.</p>
+            <p><strong>2. Tipi di sfide</strong>: Ogni giocatore ha tre possibilità: 
+                <br> - "Accetta la sfida" porta a una sfida media
+                <br> - "Rifiuta la sfida" porta a una sfida più semplice
+                <br> - "Il destino è nelle tue mani" è una sfida difficile, ma ricompensata.
             </p>
-            <p><strong>3. Accumula punti</strong>: Arriva a 50 Dollari Lonziani per vincere!</p>
+            <p><strong>3. Punteggio</strong>: Ogni sfida superata guadagna punti, e accumulando 50 punti si vince il gioco! Ogni sfida ha un punteggio differente a seconda del tipo (5, 2 o 10 dollari lonziani).</p>
+            <p><strong>4. Punti accumulati</strong>: I punti vengono mostrati in tempo reale durante il gioco. Tieni traccia dei tuoi progressi e cerca di arrivare per primo a 50 Dollari Lonziani!</p>
             <button class="close" onclick="closeRegulation()">Chiudi</button>
         </div>
     </div>
 
     <script>
-        // Funzione per mostrare il regolamento
-        function showRegulation() {
-            document.getElementById('regulation-modal').style.display = 'flex';
+        let character = '';
+        let points = 0;
+        let currentChallengeType = '';
+        let currentChallenge = {};
+
+        const challengeList = {
+            accept: [
+                { challenge: "Canta una canzone famosa", points: 5 },
+                { challenge: "Fai una coreografia improvvisata", points: 5 },
+                { challenge: "Imita un animale per 1 minuto", points: 5 },
+                { challenge: "Racconta una barzelletta", points: 5 },
+                { challenge: "Crea una poesia improvvisata", points: 5 }
+            ],
+            refuse: [
+                { challenge: "Fai 10 flessioni", points: 2 },
+                { challenge: "Tieniti in equilibrio su un piede per 30 secondi", points: 2 },
+                { challenge: "Fai 5 salti mortali", points: 2 },
+                { challenge: "Canta in modo esagerato", points: 2 },
+                { challenge: "Fai una dichiarazione d'amore", points: 2 }
+            ],
+            destiny: [
+                { challenge: "Racconta la tua giornata come se fosse un film d'azione", points: 10 },
+                { challenge: "Fai un discorso motivazionale su un oggetto random", points: 10 },
+                { challenge: "Imita un politico famoso per 1 minuto", points: 10 },
+                { challenge: "Fai un balletto pazzo e improvvisato", points: 10 },
+                { challenge: "Leggi una poesia di 3 righe con grande passione", points: 10 }
+            ]
+        };
+
+        // Selezione del personaggio
+        function selectCharacter() {
+            character = document.getElementById('character-select').value;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('character-name').innerText = `Ciao ${character}, scegli la tua azione!`;
         }
 
-        // Funzione per chiudere il regolamento
+        // Funzioni per le diverse azioni (Accetta, Rifiuta, Destino)
+        function acceptChallenge() {
+            currentChallengeType = 'accept';
+            currentChallenge = getRandomChallenge('accept');
+            showChallenge();
+        }
+
+        function refuseChallenge() {
+            currentChallengeType = 'refuse';
+            currentChallenge = getRandomChallenge('refuse');
+            showChallenge();
+        }
+
+        function destinyChallenge() {
+            currentChallengeType = 'destiny';
+            currentChallenge = getRandomChallenge('destiny');
+            showChallenge();
+        }
+
+        // Funzione per mostrare la sfida
+        function showChallenge() {
+            document.getElementById('challenge-title').innerText = `Sfida: ${currentChallenge.challenge}`;
+            document.getElementById('challenge-description').innerText = `Sei pronto a completarla?`;
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('challenge-screen').classList.remove('hidden');
+        }
+
+        // Completamento della sfida e accumulo dei punti
+        function completeChallenge() {
+            points += currentChallenge.points;
+            document.getElementById('points-value').innerText = points;
+            document.getElementById('points').classList.remove('hidden');
+            document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+        }
+
+        // Cambia sfida
+        function changeChallenge() {
+            document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+        }
+
+        // Funzione per ottenere una sfida random
+        function getRandomChallenge(type) {
+            const challenges = challengeList[type];
+            const randomIndex = Math.floor(Math.random() * challenges.length);
+            return challenges[randomIndex];
+        }
+
+        // Funzione per mostrare il regolamento
+        function showRegulation() {
+            document.getElementById('regulation-modal').classList.remove('hidden');
+        }
+
+        // Funzione per chiudere la finestra modale
         function closeRegulation() {
-            document.getElementById('regulation-modal').style.display = 'none';
+            document.getElementById('regulation-modal').classList.add('hidden');
         }
     </script>
 </body>
