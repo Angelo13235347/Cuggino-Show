@@ -125,7 +125,6 @@
     </style>
 </head>
 <body>
-
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
@@ -143,39 +142,33 @@
         <br>
         <button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
     </div>
-
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
-        <p>Seleziona la tua azione:</p>
+        <p>Scegli la tua azione:</p>
         <button class="button accept" onclick="acceptChallenge()">Accetta la sfida</button>
         <button class="button refuse" onclick="refuseChallenge()">Rifiuta la sfida</button>
         <button class="button destiny" onclick="destinyChallenge()">Il destino è nelle tue mani</button>
     </div>
-
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
         <button class="button" onclick="completeChallenge()">Completa la sfida</button>
         <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
     </div>
-
     <div id="points" class="hidden">
         <p>Punti accumulati: <span id="points-value">0</span> Dollari Lonziani</p>
     </div>
-
     <!-- Cerchietto per il regolamento -->
     <button class="button circle" onclick="showRegulation()">?</button>
-
     <!-- Finestra modale per il regolamento -->
     <div id="regulation-modal" class="hidden">
         <div class="modal-content">
             <h3>Regolamento del Gioco</h3>
             <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili. Il nome del personaggio scelto influenzerà le sfide.</p>
-            <p><strong>2. Tipi di sfide</strong>: Ogni giocatore ha tre possibilità: 
-                <br> - "Accetta la sfida" porta a una sfida media
-                <br> - "Rifiuta la sfida" porta a una sfida più semplice
-                <br> - "Il destino è nelle tue mani" è una sfida difficile, ma ricompensata.
-            </p>
+            <p><strong>2. Tipi di sfide</strong>: Ogni giocatore ha tre possibilità: <br>
+                - "Accetta la sfida" porta a una sfida media <br>
+                - "Rifiuta la sfida" porta a una sfida più semplice <br>
+                - "Il destino è nelle tue mani" è una sfida difficile, ma ricompensata. </p>
             <p><strong>3. Punteggio</strong>: Ogni sfida superata guadagna punti, e accumulando 50 punti si vince il gioco! Ogni sfida ha un punteggio differente a seconda del tipo (5, 2 o 10 dollari lonziani).</p>
             <p><strong>4. Punti accumulati</strong>: I punti vengono mostrati in tempo reale durante il gioco. Tieni traccia dei tuoi progressi e cerca di arrivare per primo a 50 Dollari Lonziani!</p>
             <button class="close" onclick="closeRegulation()">Chiudi</button>
@@ -187,7 +180,6 @@
         let points = 0;
         let currentChallengeType = '';
         let currentChallenge = {};
-
         const challengeList = {
             accept: [
                 { challenge: "Canta una canzone famosa", points: 5 },
@@ -204,84 +196,67 @@
                 { challenge: "Fai una dichiarazione d'amore", points: 2 }
             ],
             destiny: [
-                { challenge: "Racconta la tua giornata come se fosse un film d'azione", points: 10 },
-                { challenge: "Fai un discorso motivazionale su un oggetto random", points: 10 },
-                { challenge: "Imita un politico famoso per 1 minuto", points: 10 },
-                { challenge: "Fai un balletto pazzo e improvvisato", points: 10 },
-                { challenge: "Leggi una poesia di 3 righe con grande passione", points: 10 }
+                { challenge: "Racconta la tua storia più imbarazzante", points: 10 },
+                { challenge: "Crea un rap su Capodanno", points: 10 },
+                { challenge: "Fai il discorso più lungo del mondo", points: 10 },
+                { challenge: "Chiedi il numero a una persona che non conosci", points: 10 },
+                { challenge: "Fai una danza strana davanti a tutti", points: 10 }
             ]
         };
 
         function selectCharacter() {
-            character = document.getElementById("character-select").value;
-            document.getElementById("character-name").innerText = `Stai giocando come: ${character}`;
-            document.getElementById("start-screen").classList.add("hidden");
-            document.getElementById("game-screen").classList.remove("hidden");
-            document.getElementById("points").classList.remove("hidden");
+            character = document.getElementById('character-select').value;
+            document.getElementById('character-name').innerText = character;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
         }
 
         function acceptChallenge() {
-            startChallenge("accept");
+            currentChallengeType = 'accept';
+            loadChallenge();
         }
 
         function refuseChallenge() {
-            startChallenge("refuse");
+            currentChallengeType = 'refuse';
+            loadChallenge();
         }
 
         function destinyChallenge() {
-            startChallenge("destiny");
+            currentChallengeType = 'destiny';
+            loadChallenge();
         }
 
-        function startChallenge(type) {
-            currentChallengeType = type;
+        function loadChallenge() {
+            const challenge = getRandomChallenge(currentChallengeType);
+            currentChallenge = challenge;
+            document.getElementById('challenge-title').innerText = challenge.challenge;
+            document.getElementById('challenge-description').innerText = `Punti: ${challenge.points}`;
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('challenge-screen').classList.remove('hidden');
+        }
+
+        function getRandomChallenge(type) {
             const challenges = challengeList[type];
-            currentChallenge = challenges[Math.floor(Math.random() * challenges.length)];
-            document.getElementById("challenge-title").innerText = `Sfida: ${currentChallenge.challenge}`;
-            document.getElementById("challenge-description").innerText = `Punti in palio: ${currentChallenge.points}`;
-            document.getElementById("game-screen").classList.add("hidden");
-            document.getElementById("challenge-screen").classList.remove("hidden");
+            return challenges[Math.floor(Math.random() * challenges.length)];
         }
 
         function completeChallenge() {
             points += currentChallenge.points;
-            document.getElementById("points-value").innerText = points;
-            checkWinCondition();
-            resetToGameScreen();
+            document.getElementById('points-value').innerText = points;
+            document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
         }
 
         function changeChallenge() {
-            startChallenge(currentChallengeType);
-        }
-
-        function resetToGameScreen() {
-            document.getElementById("challenge-screen").classList.add("hidden");
-            document.getElementById("game-screen").classList.remove("hidden");
-        }
-
-        function checkWinCondition() {
-            if (points >= 50) {
-                alert(`Complimenti! Hai vinto con ${points} Dollari Lonziani!`);
-                resetGame();
-            }
-        }
-
-        function resetGame() {
-            points = 0;
-            character = '';
-            currentChallengeType = '';
-            currentChallenge = {};
-            document.getElementById("points-value").innerText = points;
-            document.getElementById("start-screen").classList.remove("hidden");
-            document.getElementById("game-screen").classList.add("hidden");
-            document.getElementById("challenge-screen").classList.add("hidden");
+            loadChallenge();
         }
 
         function showRegulation() {
-            document.getElementById("regulation-modal").style.display = "flex";
+            document.getElementById('regulation-modal').classList.remove('hidden');
         }
 
         function closeRegulation() {
-            document.getElementById("regulation-modal").style.display = "none";
+            document.getElementById('regulation-modal').classList.add('hidden');
         }
     </script>
 </body>
