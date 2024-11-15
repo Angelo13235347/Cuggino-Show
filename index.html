@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gioco Capodanno</title>
     <style>
-    body {
-    font-family: Arial, sans-serif;
-    background-color: #D6EAF8; /* Blu pastello chiaro */
-    color: #333;
-    text-align: center;
-    padding: 20px;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe5d9; /* Colore sfondo scelto */
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
         .button {
             color: white;
             border: none;
@@ -22,24 +23,31 @@
             border-radius: 8px;
             width: 100%;
         }
+
         .button:hover {
             opacity: 0.8;
         }
+
         .button.accept {
             background-color: #4CAF50; /* Verde */
         }
+
         .button.refuse {
             background-color: #FF5722; /* Arancione */
         }
+
         .button.destiny {
             background-color: #3F51B5; /* Blu */
         }
+
         .button.red {
             background-color: #f44336;
         }
+
         .button.red:hover {
             background-color: #e53935;
         }
+
         .button.circle {
             width: 50px;
             height: 50px;
@@ -57,18 +65,22 @@
             align-items: center;
             justify-content: center;
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
         }
+
         #points {
             font-size: 22px;
             font-weight: bold;
             margin-top: 20px;
         }
+
         #challenge-container {
             margin-top: 30px;
         }
+
         select {
             padding: 10px;
             font-size: 16px;
@@ -76,6 +88,7 @@
             border-radius: 8px;
             width: 200px;
         }
+
         #regulation-modal {
             display: none;
             position: fixed;
@@ -89,6 +102,7 @@
             align-items: center;
             justify-content: center;
         }
+
         #regulation-modal .modal-content {
             background-color: white;
             padding: 20px;
@@ -97,9 +111,11 @@
             width: 80%;
             text-align: left;
         }
+
         #regulation-modal h3 {
             margin-top: 0;
         }
+
         #regulation-modal .close {
             background-color: red;
             color: white;
@@ -113,7 +129,6 @@
     </style>
 </head>
 <body>
-
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
@@ -142,15 +157,14 @@
 
     <!-- Regolamento -->
     <button class="button circle" onclick="showRegulation()">?</button>
-
     <div id="regulation-modal">
         <div class="modal-content">
             <h3>Regolamento del Gioco</h3>
             <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili.</p>
-            <p><strong>2. Tre opzioni di gioco</strong>: 
-                <br>- "Accetta la sfida" (Sfida media, 5 Dollari Lonziani)
-                <br>- "Rifiuta la sfida" (Sfida semplice, 2 Dollari Lonziani)
-                <br>- "Il destino è nelle tue mani" (Sfida difficile, 10 Dollari Lonziani).
+            <p><strong>2. Tre opzioni di gioco</strong>: <br>
+                - "Accetta la sfida" (Sfida media, 5 Dollari Lonziani) <br>
+                - "Rifiuta la sfida" (Sfida semplice, 2 Dollari Lonziani) <br>
+                - "Il destino è nelle tue mani" (Sfida difficile, 10 Dollari Lonziani).
             </p>
             <p><strong>3. Accumula punti</strong>: Arriva a 50 Dollari Lonziani per vincere!</p>
             <button class="close" onclick="closeRegulation()">Chiudi</button>
@@ -158,14 +172,31 @@
     </div>
 
     <script>
-        // Funzione per mostrare il regolamento
+        function selectCharacter() {
+            const character = document.getElementById('character-select').value;
+            document.getElementById('character-name').innerText = `Giocatore: ${character}`;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+        }
+
         function showRegulation() {
             document.getElementById('regulation-modal').style.display = 'flex';
         }
 
-        // Funzione per chiudere il regolamento
         function closeRegulation() {
             document.getElementById('regulation-modal').style.display = 'none';
+        }
+
+        function acceptChallenge() {
+            alert("Hai accettato una sfida!");
+        }
+
+        function refuseChallenge() {
+            alert("Hai rifiutato una sfida!");
+        }
+
+        function destinyChallenge() {
+            alert("Il destino è nelle tue mani!");
         }
     </script>
 </body>
