@@ -100,14 +100,15 @@
             border-radius: 8px;
             width: 200px;
         }
+        /* Modale per il regolamento */
         #regulation-modal {
-            display: none;
+            display: none; /* Nascondi il modale di default */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.6); /* Sfondo semitrasparente */
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -172,7 +173,7 @@
     <button class="button circle" onclick="showRegulation()">?</button>
 
     <!-- Finestra modale per il regolamento -->
-    <div id="regulation-modal" class="hidden">
+    <div id="regulation-modal">
         <div class="modal-content">
             <h3>Regolamento del Gioco</h3>
             <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili. Il nome del personaggio scelto influenzerà le sfide.</p>
@@ -265,11 +266,11 @@
         }
 
         function showRegulation() {
-            document.getElementById('regulation-modal').classList.remove('hidden');
+            document.getElementById('regulation-modal').style.display = 'flex';
         }
 
         function closeRegulation() {
-            document.getElementById('regulation-modal').classList.add('hidden');
+            document.getElementById('regulation-modal').style.display = 'none';
         }
     </script>
 </body>
