@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #d0f0fd; /* Nuovo colore sfondo: blu tenue */
+            background-color: #d0f0fd; /* Blu tenue */
             color: #333;
             text-align: center;
             padding: 20px;
@@ -71,6 +71,12 @@
         .button.start:hover {
             background: linear-gradient(to right, #feb47b, #ff7e5f);
             transform: scale(1.05); /* Ingrandimento al passaggio del mouse */
+        }
+        .button.complete-challenge {
+            background-color: #8E44AD; /* Viola scuro */
+        }
+        .button.complete-challenge:hover {
+            background-color: #9B59B6; /* Viola chiaro */
         }
         .hidden {
             display: none;
@@ -154,7 +160,7 @@
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
-        <button class="button" onclick="completeChallenge()">Completa la sfida</button>
+        <button class="button complete-challenge" onclick="completeChallenge()">Completa la sfida</button>
         <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
     </div>
 
@@ -201,9 +207,7 @@
                 { challenge: "Fai una dichiarazione d'amore", points: 2 }
             ],
             destiny: [
-                { challenge: "Parla come se fossi un robot per 2 minuti", points: 10 },
-                { challenge: "Racconta la tua storia più imbarazzante", points: 10 },
-                { challenge: "Crea un rap su Capodanno", points: 10 },
+                { challenge: "Parla in una lingua inventata", points: 10 },
                 { challenge: "Fai il discorso più lungo del mondo", points: 10 },
                 { challenge: "Chiedi il numero a una persona che non conosci", points: 10 },
                 { challenge: "Fai una danza strana davanti a tutti", points: 10 }
