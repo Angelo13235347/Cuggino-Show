@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #ffe5d9; /* Colore sfondo scelto */
+            background-color: #ffe5d9; /* Colore sfondo */
             color: #333;
             text-align: center;
             padding: 20px;
@@ -28,12 +28,16 @@
             opacity: 0.8;
         }
 
+        .button.start {
+            background-color: #FF9800; /* Arancione acceso per maggiore visibilità */
+        }
+
         .button.accept {
             background-color: #4CAF50; /* Verde */
         }
 
         .button.refuse {
-            background-color: #FF5722; /* Arancione */
+            background-color: #FF5722; /* Rosso */
         }
 
         .button.destiny {
@@ -129,6 +133,7 @@
     </style>
 </head>
 <body>
+    <!-- Schermata di selezione personaggio -->
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
@@ -144,9 +149,17 @@
             <option value="Giulia">Giulia</option>
         </select>
         <br>
-        <button class="button" onclick="selectCharacter()">Inizia il gioco</button>
+        <button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
     </div>
 
+    <!-- Schermata di conferma personaggio -->
+    <div class="container hidden" id="confirm-screen">
+        <h2 id="confirm-character-name"></h2>
+        <p>Pronto per iniziare?</p>
+        <button class="button accept" onclick="startGame()">Vai alla Sfida</button>
+    </div>
+
+    <!-- Schermata di gioco -->
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
         <p>Seleziona la tua azione:</p>
@@ -174,8 +187,15 @@
     <script>
         function selectCharacter() {
             const character = document.getElementById('character-select').value;
-            document.getElementById('character-name').innerText = `Giocatore: ${character}`;
+            document.getElementById('confirm-character-name').innerText = `Personaggio selezionato: ${character}`;
             document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('confirm-screen').classList.remove('hidden');
+        }
+
+        function startGame() {
+            const character = document.getElementById('character-select').value;
+            document.getElementById('character-name').innerText = `Giocatore: ${character}`;
+            document.getElementById('confirm-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
         }
 
