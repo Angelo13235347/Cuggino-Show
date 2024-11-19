@@ -156,6 +156,36 @@
             font-size: 16px;
         }
 
+        /* Modale per errore (tempo scaduto) */
+        #time-out-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        #time-out-modal .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            width: 80%;
+        }
+        #time-out-modal .close {
+            background-color: #FF5722; /* Colore arancione per il messaggio di errore */
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
         /* Nuovo design per il timer */
         #timer-container {
             position: relative;
@@ -226,23 +256,22 @@
         </div>
 
         <button class="button complete-challenge" onclick="completeChallenge()">Completa la sfida</button>
-        <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
+        <button class="button red" onclick="changeChallenge()">Abbandona</button>
     </div>
 
-    <div id="points" class="hidden">
-        <p>Punti accumulati: <span id="points-value">0</span> Dollari Lonziani</p>
+    <div id="points">
+        <p>Punti: <span id="points-value">0</span></p>
     </div>
 
-    <!-- Cerchietto per il regolamento -->
-    <button class="button circle" onclick="showRegulation()">?</button>
+    <button class="button red" onclick="showRegulation()">Mostra regolamento</button>
 
-    <!-- Finestra modale per il regolamento -->
+    <!-- Finestra modale per regolamento -->
     <div id="regulation-modal">
         <div class="modal-content">
-            <h3>Regolamento del Gioco</h3>
-            <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili.</p>
-            <p><strong>2. Tipi di sfide</strong>: Ogni giocatore può scegliere tra tre sfide <br>
-                - "Accetta la sfida" porta a una sfida media da 5 punti <br>
+            <h3>Regolamento</h3>
+            <p><strong>1. Sfida</strong>: Puoi scegliere di "Accettare" la sfida, "Rifiutarla" o "Mettiti alla prova".</p>
+            <p><strong>2. Difficoltà</strong>: <br>
+                - "Accetta la sfida" porta a una sfida di 5 punti <br>
                 - "Rifiuta la sfida" porta a una sfida semplice da 2 punti <br>
                 - "Mettiti alla prova" porta a una sfida difficile da 10 punti.
             </p>
@@ -257,6 +286,14 @@
             <h3>Congratulazioni, <span id="winner-name"></span>!</h3>
             <p>Hai vinto con <span id="final-points"></span> punti! Buon Anno!</p>
             <button class="close" onclick="closeCongratulations()">Chiudi</button>
+        </div>
+    </div>
+
+    <!-- Finestra modale per tempo scaduto -->
+    <div id="time-out-modal">
+        <div class="modal-content">
+            <h3>CUGGI LA PROSSIMA VOLTA PIU' VELOCE!</h3>
+            <button class="close" onclick="closeTimeOut()">Chiudi</button>
         </div>
     </div>
 
@@ -435,6 +472,13 @@ function selectCharacter() {
             document.getElementById('game-screen').classList.remove('hidden');
         }
 
+         function selectCharacter() {
+            character = document.getElementById('character-select').value;
+            document.getElementById('character-name').innerText = character;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+        }
+
         function acceptChallenge() {
             currentChallengeType = 'accept';
             loadChallenge();
@@ -489,8 +533,7 @@ function selectCharacter() {
 
                 if (duration <= 0) {
                     clearInterval(timerInterval);
-                    alert("Tempo scaduto! Torniamo al gioco!");
-                    returnToGameScreen();
+                    showTimeOutModal();
                 }
             }, 1000);
         }
@@ -536,6 +579,15 @@ function selectCharacter() {
 
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
+        }
+
+        function showTimeOutModal() {
+            document.getElementById('time-out-modal').style.display = 'flex';
+        }
+
+        function closeTimeOut() {
+            document.getElementById('time-out-modal').style.display = 'none';
+            returnToGameScreen();  // Torna al gioco
         }
     </script>
 </body>
