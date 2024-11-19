@@ -97,6 +97,13 @@
             border-radius: 8px;
             width: 200px;
         }
+		/* Aggiungi un po' di stile al timer */
+        #timer {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: red;
+        }
         /* Modale per il regolamento */
         #regulation-modal {
             display: none; /* Nascondi il modale di default */
@@ -226,6 +233,9 @@
         let currentChallenge = null;
         let currentChallengeType = null;
         let character = null;
+		let timerDuration = 60; // Durata del timer in secondi
+        let timerInterval;
+        let timeLeft = timerDuration; // Tempo rimanente
 
         const challengeList = {
             accept: [
@@ -386,6 +396,26 @@
     { "challenge": "Trova 5 parole che abbiano la stessa radice", "points": 10 }
             ]
         };
+		
+function startTimer() {
+            // Mostra il timer
+            document.getElementById('timer').innerText = `Tempo rimasto: ${timeLeft} s`;
+
+            // Avvia l'intervallo
+            timerInterval = setInterval(function() {
+                timeLeft--; // Diminuisci il tempo rimasto
+
+                // Aggiorna il timer visibile
+                document.getElementById('timer').innerText = `Tempo rimasto: ${timeLeft} s`;
+
+                // Se il tempo è scaduto, termina il gioco
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval); // Ferma il timer
+                    alert('Il tempo è scaduto! La partita è terminata.');
+                    endGame(); // Funzione per concludere il gioco
+                }
+            }, 1000); // Aggiorna ogni secondo
+        }
 
         function selectCharacter() {
             character = document.getElementById('character-select').value;
@@ -394,83 +424,79 @@
             document.getElementById('game-screen').classList.remove('hidden');
         }
 
-        function selectCharacter() {
-            const selectedCharacter = document.getElementById("character-select").value;
-            character = selectedCharacter;
-            document.getElementById("character-name").textContent = "Sei " + character;
-            document.getElementById("start-screen").classList.add("hidden");
-            document.getElementById("game-screen").classList.remove("hidden");
-        }
-
         function acceptChallenge() {
-            startChallenge("accept");
+            currentChallengeType = 'accept';
+            loadChallenge();
         }
 
         function refuseChallenge() {
-            startChallenge("refuse");
+            currentChallengeType = 'refuse';
+            loadChallenge();
         }
 
         function destinyChallenge() {
-            startChallenge("destiny");
+            currentChallengeType = 'destiny';
+            loadChallenge();
+        }
+        // Avvia il timer
+            startTimer();
+			
+        function loadChallenge() {
+            const challenge = getRandomChallenge(currentChallengeType);
+            currentChallenge = challenge;
+            document.getElementById('challenge-title').innerText = challenge.challenge;
+            document.getElementById('challenge-description').innerText = `Punti: ${challenge.points}`;
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('challenge-screen').classList.remove('hidden');
         }
 
-        function startChallenge(type) {
-            currentChallengeType = type;
-            const challenge = challengeList[type];
-            document.getElementById("challenge-title").textContent = challenge.title;
-            document.getElementById("challenge-description").textContent = challenge.description;
-            document.getElementById("game-screen").classList.add("hidden");
-            document.getElementById("challenge-screen").classList.remove("hidden");
+        function getRandomChallenge(type) {
+            const challenges = challengeList[type];
+            return challenges[Math.floor(Math.random() * challenges.length)];
         }
 
         function completeChallenge() {
-            let challengePoints = 0;
-            if (currentChallengeType === "accept") {
-                challengePoints = 5;
-            } else if (currentChallengeType === "refuse") {
-                challengePoints = 2;
-            } else if (currentChallengeType === "destiny") {
-                challengePoints = 10;
-            }
-
-            points += challengePoints;
-            document.getElementById("points-value").textContent = points;
-
-            if (points >= 50) {
-                showCongratulations();
-            } else {
-                resetGame();
-            }
+            points += currentChallenge.points;
+            document.getElementById('points-value').innerText = points;
+            document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('points').classList.remove('hidden');
+            checkForWinner();
         }
 
         function changeChallenge() {
-            document.getElementById("challenge-screen").classList.add("hidden");
-            document.getElementById("game-screen").classList.remove("hidden");
+            document.getElementById('challenge-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('points').classList.remove('hidden');
         }
 
         function showRegulation() {
-            document.getElementById("regulation-modal").style.display = "flex";
+            document.getElementById('regulation-modal').style.display = 'flex';
         }
 
         function closeRegulation() {
-            document.getElementById("regulation-modal").style.display = "none";
+            document.getElementById('regulation-modal').style.display = 'none';
+        }
+
+        function checkForWinner() {
+            if (points >= 50) {
+                showCongratulations();
+            }
         }
 
         function showCongratulations() {
-            document.getElementById("winner-name").textContent = character;
-            document.getElementById("congratulations-modal").style.display = "flex";
+            document.getElementById('winner-name').innerText = character;
+            document.getElementById('congratulations-modal').style.display = 'flex';
         }
 
         function closeCongratulations() {
-            document.getElementById("congratulations-modal").style.display = "none";
-            resetGame();
+            document.getElementById('congratulations-modal').style.display = 'none';
         }
-
-        function resetGame() {
-            points = 0;
-            document.getElementById("points-value").textContent = points;
-            document.getElementById("game-screen").classList.add("hidden");
-            document.getElementById("start-screen").classList.remove("hidden");
+		function endGame() {
+            alert(`Il gioco è terminato! Punteggio finale: ${points} Dollari Lonziani`);
+            timeLeft = timerDuration;
+            document.getElementById('timer').innerText = '';
+            document.getElementById('game-screen').classList.add('hidden');
         }
     </script>
 </body>
