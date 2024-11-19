@@ -155,6 +155,37 @@
             cursor: pointer;
             font-size: 16px;
         }
+
+        /* Nuovo design per il timer */
+        #timer-container {
+            position: relative;
+            width: 80%;
+            max-width: 500px;
+            margin: 20px auto;
+            height: 50px;
+            border-radius: 25px;
+            background: #ddd;
+        }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            background: #4CAF50;
+            border-radius: 25px;
+            transition: width 1s linear;
+        }
+        #timer-number {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -187,7 +218,13 @@
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
-        <p id="timer"></p>
+
+        <!-- Timer con barra di avanzamento -->
+        <div id="timer-container">
+            <div id="timer-bar"></div>
+            <div id="timer-number">00</div>
+        </div>
+
         <button class="button complete-challenge" onclick="completeChallenge()">Completa la sfida</button>
         <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
     </div>
@@ -206,28 +243,30 @@
             <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili.</p>
             <p><strong>2. Tipi di sfide</strong>: Ogni giocatore può scegliere tra tre sfide <br>
                 - "Accetta la sfida" porta a una sfida media da 5 punti <br>
-                - "Rifiuta la sfida" porta a una sfida più semplice da 2 punti <br>
-                - "Mettiti alla Prova" è una sfida difficile da 10 punti </p>
-            <p><strong>3. Punteggio</strong>: Per ogni sfida superata vengono guadagnati punti, e accumulando 50 punti si vince il gioco!</p>
-            <p><strong>4. Punti accumulati</strong>: I punti vengono mostrati in tempo reale durante il gioco. Tieni traccia dei tuoi progressi e cerca di arrivare per primo a 50! Buona Fortuna!</p>
+                - "Rifiuta la sfida" porta a una sfida semplice da 2 punti <br>
+                - "Mettiti alla prova" porta a una sfida difficile da 10 punti.
+            </p>
+            <p><strong>3. Tempo</strong>: Ogni sfida ha un tempo limitato in base alla difficoltà, che deve essere completata prima che scada.</p>
             <button class="close" onclick="closeRegulation()">Chiudi</button>
         </div>
     </div>
 
-    <!-- Finestra modale di congratulazioni -->
+    <!-- Finestra modale per congratulazioni -->
     <div id="congratulations-modal">
         <div class="modal-content">
-            <h3>Complimenti <span id="winner-name"></span>, hai vinto! <br> Buon Anno Nuovo!</h3>
+            <h3>Congratulazioni, <span id="winner-name"></span>!</h3>
+            <p> Hai vinto con <span id="final-points"></span> punti! Buon Anno!</p>
             <button class="close" onclick="closeCongratulations()">Chiudi</button>
         </div>
     </div>
-    
+
     <script>
         let points = 0;
-        let currentChallenge = null;
-        let currentChallengeType = null;
-        let character = null;
-        let timerInterval = null;
+        let character = "";
+        let currentChallenge = {};
+        let currentChallengeType = '';
+        let timerInterval;
+        let totalTime;
 	    
         const challengeList = {
             accept: [
@@ -389,14 +428,7 @@
             ]
         };
 	    
-function selectCharacter() {
-            character = document.getElementById('character-select').value;
-            document.getElementById('character-name').innerText = character;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-        }
-
-        function acceptChallenge() {
+function acceptChallenge() {
             currentChallengeType = 'accept';
             loadChallenge();
         }
@@ -436,14 +468,21 @@ function selectCharacter() {
                 duration = 45;  // 45 secondi per sfide da 10 punti
             }
 
-            document.getElementById('timer').innerText = `Tempo: ${duration}s`;
-            
+            totalTime = duration;
+            document.getElementById('timer-number').innerText = `${totalTime}s`;
+
+            const barWidth = (duration / totalTime) * 100;
+            document.getElementById('timer-bar').style.width = `${barWidth}%`;
+
             timerInterval = setInterval(function() {
                 duration--;
-                document.getElementById('timer').innerText = `Tempo: ${duration}s`;
+                document.getElementById('timer-number').innerText = `${duration}s`;
+                const barWidth = (duration / totalTime) * 100;
+                document.getElementById('timer-bar').style.width = `${barWidth}%`;
+
                 if (duration <= 0) {
                     clearInterval(timerInterval);
-                    alert("Tempo scaduto! Torniamo al gioco!");
+                    alert("CUGGI PIU' VELOCE LA PROSSIMA VOLTA");
                     returnToGameScreen();
                 }
             }, 1000);
@@ -484,6 +523,7 @@ function selectCharacter() {
 
         function showCongratulations() {
             document.getElementById('winner-name').innerText = character;
+            document.getElementById('final-points').innerText = points;
             document.getElementById('congratulations-modal').style.display = 'flex';
         }
 
