@@ -255,7 +255,7 @@
     <div id="congratulations-modal">
         <div class="modal-content">
             <h3>Congratulazioni, <span id="winner-name"></span>!</h3>
-            <p> Hai vinto con <span id="final-points"></span> punti! Buon Anno!</p>
+            <p>Hai vinto con <span id="final-points"></span> punti! Buon Anno!</p>
             <button class="close" onclick="closeCongratulations()">Chiudi</button>
         </div>
     </div>
@@ -428,7 +428,14 @@
             ]
         };
 	    
-function acceptChallenge() {
+function selectCharacter() {
+            character = document.getElementById('character-select').value;
+            document.getElementById('character-name').innerText = character;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+        }
+
+        function acceptChallenge() {
             currentChallengeType = 'accept';
             loadChallenge();
         }
@@ -482,7 +489,7 @@ function acceptChallenge() {
 
                 if (duration <= 0) {
                     clearInterval(timerInterval);
-                    alert("CUGGI PIU' VELOCE LA PROSSIMA VOLTA");
+                    alert("Tempo scaduto! Torniamo al gioco!");
                     returnToGameScreen();
                 }
             }, 1000);
