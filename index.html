@@ -394,71 +394,83 @@
             document.getElementById('game-screen').classList.remove('hidden');
         }
 
+        function selectCharacter() {
+            const selectedCharacter = document.getElementById("character-select").value;
+            character = selectedCharacter;
+            document.getElementById("character-name").textContent = "Sei " + character;
+            document.getElementById("start-screen").classList.add("hidden");
+            document.getElementById("game-screen").classList.remove("hidden");
+        }
+
         function acceptChallenge() {
-            currentChallengeType = 'accept';
-            loadChallenge();
+            startChallenge("accept");
         }
 
         function refuseChallenge() {
-            currentChallengeType = 'refuse';
-            loadChallenge();
+            startChallenge("refuse");
         }
 
         function destinyChallenge() {
-            currentChallengeType = 'destiny';
-            loadChallenge();
+            startChallenge("destiny");
         }
 
-        function loadChallenge() {
-            const challenge = getRandomChallenge(currentChallengeType);
-            currentChallenge = challenge;
-            document.getElementById('challenge-title').innerText = challenge.challenge;
-            document.getElementById('challenge-description').innerText = `Punti: ${challenge.points}`;
-            document.getElementById('game-screen').classList.add('hidden');
-            document.getElementById('challenge-screen').classList.remove('hidden');
-        }
-
-        function getRandomChallenge(type) {
-            const challenges = challengeList[type];
-            return challenges[Math.floor(Math.random() * challenges.length)];
+        function startChallenge(type) {
+            currentChallengeType = type;
+            const challenge = challengeList[type];
+            document.getElementById("challenge-title").textContent = challenge.title;
+            document.getElementById("challenge-description").textContent = challenge.description;
+            document.getElementById("game-screen").classList.add("hidden");
+            document.getElementById("challenge-screen").classList.remove("hidden");
         }
 
         function completeChallenge() {
-            points += currentChallenge.points;
-            document.getElementById('points-value').innerText = points;
-            document.getElementById('challenge-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('points').classList.remove('hidden');
-            checkForWinner();
-        }
+            let challengePoints = 0;
+            if (currentChallengeType === "accept") {
+                challengePoints = 5;
+            } else if (currentChallengeType === "refuse") {
+                challengePoints = 2;
+            } else if (currentChallengeType === "destiny") {
+                challengePoints = 10;
+            }
 
-        function changeChallenge() {
-            document.getElementById('challenge-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('points').classList.remove('hidden');
-        }
+            points += challengePoints;
+            document.getElementById("points-value").textContent = points;
 
-        function showRegulation() {
-            document.getElementById('regulation-modal').style.display = 'flex';
-        }
-
-        function closeRegulation() {
-            document.getElementById('regulation-modal').style.display = 'none';
-        }
-
-        function checkForWinner() {
             if (points >= 50) {
                 showCongratulations();
+            } else {
+                resetGame();
             }
         }
 
+        function changeChallenge() {
+            document.getElementById("challenge-screen").classList.add("hidden");
+            document.getElementById("game-screen").classList.remove("hidden");
+        }
+
+        function showRegulation() {
+            document.getElementById("regulation-modal").style.display = "flex";
+        }
+
+        function closeRegulation() {
+            document.getElementById("regulation-modal").style.display = "none";
+        }
+
         function showCongratulations() {
-            document.getElementById('winner-name').innerText = character;
-            document.getElementById('congratulations-modal').style.display = 'flex';
+            document.getElementById("winner-name").textContent = character;
+            document.getElementById("congratulations-modal").style.display = "flex";
         }
 
         function closeCongratulations() {
-            document.getElementById('congratulations-modal').style.display = 'none';
+            document.getElementById("congratulations-modal").style.display = "none";
+            resetGame();
+        }
+
+        function resetGame() {
+            points = 0;
+            document.getElementById("points-value").textContent = points;
+            document.getElementById("game-screen").classList.add("hidden");
+            document.getElementById("start-screen").classList.remove("hidden");
         }
     </script>
 </body>
