@@ -97,13 +97,6 @@
             border-radius: 8px;
             width: 200px;
         }
-		/* Aggiungi un po' di stile al timer */
-        #timer {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-            color: red;
-        }
         /* Modale per il regolamento */
         #regulation-modal {
             display: none; /* Nascondi il modale di default */
@@ -194,6 +187,7 @@
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
+        <p id="timer"></p>
         <button class="button complete-challenge" onclick="completeChallenge()">Completa la sfida</button>
         <button class="button red" onclick="changeChallenge()">Cambia sfida</button>
     </div>
@@ -233,10 +227,8 @@
         let currentChallenge = null;
         let currentChallengeType = null;
         let character = null;
-		let timerDuration = 60; // Durata del timer in secondi
-        let timerInterval;
-        let timeLeft = timerDuration; // Tempo rimanente
-
+        let timerInterval = null;
+	    
         const challengeList = {
             accept: [
     { "challenge": "Fai 20 salti consecutivi senza fermarti", "points": 5 },
@@ -396,28 +388,8 @@
     { "challenge": "Trova 5 parole che abbiano la stessa radice", "points": 10 }
             ]
         };
-		
-function startTimer() {
-            // Mostra il timer
-            document.getElementById('timer').innerText = `Tempo rimasto: ${timeLeft} s`;
-
-            // Avvia l'intervallo
-            timerInterval = setInterval(function() {
-                timeLeft--; // Diminuisci il tempo rimasto
-
-                // Aggiorna il timer visibile
-                document.getElementById('timer').innerText = `Tempo rimasto: ${timeLeft} s`;
-
-                // Se il tempo è scaduto, termina il gioco
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval); // Ferma il timer
-                    alert('Il tempo è scaduto! La partita è terminata.');
-                    endGame(); // Funzione per concludere il gioco
-                }
-            }, 1000); // Aggiorna ogni secondo
-        }
-
-        function selectCharacter() {
+	    
+function selectCharacter() {
             character = document.getElementById('character-select').value;
             document.getElementById('character-name').innerText = character;
             document.getElementById('start-screen').classList.add('hidden');
@@ -438,9 +410,7 @@ function startTimer() {
             currentChallengeType = 'destiny';
             loadChallenge();
         }
-        // Avvia il timer
-            startTimer();
-			
+
         function loadChallenge() {
             const challenge = getRandomChallenge(currentChallengeType);
             currentChallenge = challenge;
@@ -448,6 +418,7 @@ function startTimer() {
             document.getElementById('challenge-description').innerText = `Punti: ${challenge.points}`;
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('challenge-screen').classList.remove('hidden');
+            startTimer(challenge.points);  // Avvia il timer in base ai punti
         }
 
         function getRandomChallenge(type) {
@@ -455,19 +426,46 @@ function startTimer() {
             return challenges[Math.floor(Math.random() * challenges.length)];
         }
 
+        function startTimer(points) {
+            let duration;
+            if (points === 2) {
+                duration = 15;  // 15 secondi per sfide da 2 punti
+            } else if (points === 5) {
+                duration = 30;  // 30 secondi per sfide da 5 punti
+            } else if (points === 10) {
+                duration = 45;  // 45 secondi per sfide da 10 punti
+            }
+
+            document.getElementById('timer').innerText = `Tempo: ${duration}s`;
+            
+            timerInterval = setInterval(function() {
+                duration--;
+                document.getElementById('timer').innerText = `Tempo: ${duration}s`;
+                if (duration <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Tempo scaduto! Torniamo al gioco!");
+                    returnToGameScreen();
+                }
+            }, 1000);
+        }
+
         function completeChallenge() {
+            clearInterval(timerInterval);  // Ferma il timer
             points += currentChallenge.points;
             document.getElementById('points-value').innerText = points;
-            document.getElementById('challenge-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('points').classList.remove('hidden');
+            returnToGameScreen();
             checkForWinner();
         }
 
-        function changeChallenge() {
+        function returnToGameScreen() {
             document.getElementById('challenge-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             document.getElementById('points').classList.remove('hidden');
+        }
+
+        function changeChallenge() {
+            clearInterval(timerInterval);  // Ferma il timer
+            returnToGameScreen();
         }
 
         function showRegulation() {
@@ -491,12 +489,6 @@ function startTimer() {
 
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
-        }
-		function endGame() {
-            alert(`Il gioco è terminato! Punteggio finale: ${points} Dollari Lonziani`);
-            timeLeft = timerDuration;
-            document.getElementById('timer').innerText = '';
-            document.getElementById('game-screen').classList.add('hidden');
         }
     </script>
 </body>
