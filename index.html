@@ -186,36 +186,6 @@
             color: white;
             font-weight: bold;
         }
-
-        /* Modale per il messaggio di scadenza del timer */
-        #timer-expired-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Sfondo semitrasparente */
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        #timer-expired-modal .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 400px;
-            width: 80%;
-            text-align: center;
-        }
-        #timer-expired-modal .close {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
@@ -266,36 +236,37 @@
     <!-- Cerchietto per il regolamento -->
     <button class="button circle" onclick="showRegulation()">?</button>
 
-    <!-- Finestra Modale per il regolamento -->
+    <!-- Finestra modale per il regolamento -->
     <div id="regulation-modal">
         <div class="modal-content">
-            <h3>Regolamento del gioco</h3>
-            <p>Le sfide ti permetteranno di guadagnare punti, ma dovrai essere veloce!</p>
+            <h3>Regolamento del Gioco</h3>
+            <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili.</p>
+            <p><strong>2. Tipi di sfide</strong>: Ogni giocatore può scegliere tra tre sfide <br>
+                - "Accetta la sfida" porta a una sfida media da 5 punti <br>
+                - "Rifiuta la sfida" porta a una sfida semplice da 2 punti <br>
+                - "Mettiti alla prova" porta a una sfida difficile da 10 punti.
+            </p>
+            <p><strong>3. Tempo</strong>: Ogni sfida ha un tempo limitato in base alla difficoltà, che deve essere completata prima che scada.</p>
             <button class="close" onclick="closeRegulation()">Chiudi</button>
         </div>
     </div>
 
-    <!-- Modale Congratulazioni -->
+    <!-- Finestra modale per congratulazioni -->
     <div id="congratulations-modal">
         <div class="modal-content">
-            <h3>Congratulazioni! Hai completato la sfida!</h3>
+            <h3>Congratulazioni, <span id="winner-name"></span>!</h3>
+            <p>Hai vinto con <span id="final-points"></span> punti! Buon Anno!</p>
             <button class="close" onclick="closeCongratulations()">Chiudi</button>
-        </div>
-    </div>
-
-    <!-- Modale per il messaggio di scadenza del timer -->
-    <div id="timer-expired-modal">
-        <div class="modal-content">
-            <h3>CUGGI LA PROSSIMA VOLTA PIU' VELOCE!</h3>
-            <button class="close" onclick="closeTimerExpired()">Chiudi</button>
         </div>
     </div>
 
     <script>
         let points = 0;
-        let character = '';
+        let character = "";
+        let currentChallenge = {};
+        let currentChallengeType = '';
         let timerInterval;
-        let totalTime = 0;
+        let totalTime;
 	    
         const challengeList = {
             accept: [
