@@ -606,10 +606,13 @@ function selectCharacter() {
             document.getElementById('final-points').innerText = points;
             document.getElementById('congratulations-modal').style.display = 'flex';
         }
-
+// Mostra i fuochi d'artificio
+    showFireworks();
+	    
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
         }
+	    
 	    function showFireworks() {
     const fireworksContainer = document.getElementById('fireworks-container');
     fireworksContainer.style.display = 'block'; // Mostra il contenitore dei fuochi d'artificio
