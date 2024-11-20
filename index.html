@@ -301,6 +301,7 @@
     </div>
 
     <script>
+        let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
     switch (type) {
@@ -319,7 +320,13 @@
         audioElement.play();
     }
 }
-
+function playAudioAndStartTimer(audioFile, points) {
+    audioElement.src = audioFile;  // Imposta il file audio
+    audioElement.play();  // Riproduce l'audio
+    audioElement.onended = function() {
+        startTimer(points);  // Quando l'audio finisce, avvia il timer
+    };
+}
         let points = 0;
         let character = "";
         let currentChallenge = {};
@@ -524,14 +531,24 @@ function selectCharacter() {
         }
 
         function loadChallenge() {
-            const challenge = getRandomChallenge(currentChallengeType);
-            currentChallenge = challenge;
-            document.getElementById('challenge-title').innerText = challenge.challenge;
-            document.getElementById('challenge-description').innerText = `Punti: ${challenge.points}`;
-            document.getElementById('game-screen').classList.add('hidden');
-            document.getElementById('challenge-screen').classList.remove('hidden');
-            startTimer(challenge.points);  // Avvia il timer in base ai punti
-        }
+    const challenge = getRandomChallenge(currentChallengeType);  // Recupera la sfida
+    currentChallenge = challenge;
+
+    // Mostra la sfida nell'interfaccia utente
+    document.getElementById('challenge-title').innerText = challenge.challenge;
+    document.getElementById('challenge-description').innerText = `Punti: ${challenge.points}`;
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('challenge-screen').classList.remove('hidden');
+
+    // Riproduce l'audio e poi avvia il timer
+    if (currentChallengeType === 'accept') {
+        playAudioAndStartTimer('sfida_accettata.mp3', challenge.points);
+    } else if (currentChallengeType === 'refuse') {
+        playAudioAndStartTimer('sfida_rifiutata.mp3', challenge.points);
+    } else if (currentChallengeType === 'destiny') {
+        playAudioAndStartTimer('mettiti_in_gioco.mp3', challenge.points);
+    }
+}
 
         function getRandomChallenge(type) {
             const challenges = challengeList[type];
