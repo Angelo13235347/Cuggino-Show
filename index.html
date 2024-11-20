@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gioco Capodanno</title>
     <style>
-	    <div id="fireworks-container" class="hidden"></div>
         body {
             font-family: Arial, sans-serif;
             background-color: #d0f0fd; /* Blu tenue */
@@ -227,38 +226,6 @@
             content: " ❓ "; /* Emoji accanto al testo */
             font-size: 20px;
         }
-	    #fireworks-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    display: none; /* Inizialmente nascosto */
-}
-.firework {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #fff;
-    border-radius: 50%;
-    animation: firework-animation 1.5s linear infinite;
-}
-@keyframes firework-animation {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(2);
-        opacity: 0.7;
-    }
-    100% {
-        transform: scale(0);
-        opacity: 0;
-    }
-}
     </style>
 </head>
 <body>
@@ -606,33 +573,10 @@ function selectCharacter() {
             document.getElementById('final-points').innerText = points;
             document.getElementById('congratulations-modal').style.display = 'flex';
         }
-// Mostra i fuochi d'artificio
-    showFireworks();
-	    
+
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
         }
-	    
-	    function showFireworks() {
-    const fireworksContainer = document.getElementById('fireworks-container');
-    fireworksContainer.style.display = 'block'; // Mostra il contenitore dei fuochi d'artificio
-
-    // Aggiungi un numero casuale di fuochi d'artificio
-    const numFireworks = 20;
-    for (let i = 0; i < numFireworks; i++) {
-        const firework = document.createElement('div');
-        firework.classList.add('firework');
-        firework.style.left = `${Math.random() * 100}vw`; // Posizione orizzontale casuale
-        firework.style.top = `${Math.random() * 100}vh`;  // Posizione verticale casuale
-        firework.style.animationDuration = `${Math.random() * 1.5 + 1}s`; // Durata animazione casuale
-        fireworksContainer.appendChild(firework);
-
-        // Rimuovere i fuochi d'artificio dopo l'animazione
-        setTimeout(() => {
-            firework.remove();
-        }, 2000); // Tempo per cui il fuoco d'artificio è visibile (2 secondi)
-    }
-}
     </script>
 </body>
 </html>
