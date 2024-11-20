@@ -38,21 +38,28 @@
             background-color: #e53935;
         }
         .button.circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #3F51B5;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    width: 60px; /* Imposta una larghezza fissa per il cerchio */
+    height: 60px; /* Imposta un'altezza fissa per il cerchio */
+    border-radius: 50%; /* Rende il pulsante circolare */
+    background-color: #3F51B5; /* Colore di sfondo blu */
+    color: white; /* Colore del testo */
+    font-size: 24px; /* Dimensione del font per l'icona */
+    border: none; /* Rimuove il bordo */
+    cursor: pointer; /* Mostra il cursore a mano quando si passa sopra */
+    position: fixed; /* Posiziona il pulsante in modo fisso */
+    bottom: 20px; /* Posiziona il pulsante a 20px dalla parte inferiore */
+    right: 20px; /* Posiziona il pulsante a 20px dalla parte destra */
+    display: flex; /* Usa Flexbox per il centering */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra orizzontalmente */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra per l'effetto 3D */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transizioni per l'effetto hover */
+}
+
+.button.circle:hover {
+    background-color: #303F9F; /* Colore più scuro al passaggio del mouse */
+    transform: scale(1.1); /* Aumenta leggermente le dimensioni al passaggio del mouse */
+}
         }
         .button.start {
             background: linear-gradient(to right, #ff7e5f, #feb47b); /* Sfumatura */
@@ -218,7 +225,7 @@
         }
 
         .button.circle::before {
-            content: "❓ "; /* Emoji accanto al testo */
+            content: " ❓ "; /* Emoji accanto al testo */
             font-size: 20px;
         }
     </style>
@@ -269,7 +276,7 @@
     </div>
 
     <!-- Cerchietto per il regolamento -->
-    <button class="button circle" onclick="showRegulation()">❓</button>
+    <button class="button circle" onclick="showRegulation()"></button>
 
     <!-- Finestra modale per il regolamento -->
     <div id="regulation-modal">
