@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html> 
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -12,220 +12,38 @@
             text-align: center;
             padding: 20px;
         }
-        .button {
-            color: white;
-            border: none;
-            padding: 15px 32px;
-            font-size: 18px;
-            cursor: pointer;
-            margin: 10px 0;
-            border-radius: 8px;
-            width: 100%;
-        }
-        .button.accept {
-            background-color: #4CAF50; /* Verde */
-        }
-        .button.refuse {
-            background-color: #FF5722; /* Arancione */
-        }
-        .button.destiny {
-            background-color: #3F51B5; /* Blu */
-        }
-        .button.red {
-            background-color: #f44336;
-        }
-        .button.red:hover {
-            background-color: #e53935;
-        }
-.button.circle {
-    width: 60px; /* Imposta una larghezza fissa per il cerchio */
-    height: 60px; /* Imposta un'altezza fissa per il cerchio */
-    border-radius: 50%; /* Rende il pulsante circolare */
-    background-color: #3F51B5; /* Colore di sfondo blu */
-    color: white; /* Colore del testo */
-    font-size: 24px; /* Dimensione del font per l'icona */
-    border: none; /* Rimuove il bordo */
-    cursor: pointer; /* Mostra il cursore a mano quando si passa sopra */
-    position: fixed; /* Posiziona il pulsante in modo fisso */
-    bottom: 20px; /* Posiziona il pulsante a 20px dalla parte inferiore */
-    right: 20px; /* Posiziona il pulsante a 20px dalla parte destra */
-    display: flex; /* Usa Flexbox per il centering */
-    align-items: center; /* Centra verticalmente */
-    justify-content: center; /* Centra orizzontalmente */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra per l'effetto 3D */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Transizioni per l'effetto hover */
-}
-.button.circle:hover {
-    background-color: #303F9F; /* Colore più scuro al passaggio del mouse */
-    transform: scale(1.1); /* Aumenta leggermente le dimensioni al passaggio del mouse */
-}
-        .button.start {
-    background: linear-gradient(to right, #FF7E5F, #FEB47B); /* Sfumatura arancione-giallo */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-}
-.button.start:hover {
-    background: linear-gradient(to right, #FEB47B, #FF7E5F); /* Cambio di sfumatura al passaggio del mouse */
-    transform: scale(1.05); /* Ingrandimento al passaggio del mouse */
-}	
-        .button.complete-challenge {
-            background-color: #8E44AD; /* Viola scuro */
-        }
-        .button.complete-challenge:hover {
-            background-color: #9B59B6; /* Viola chiaro */
-        }
-        .hidden {
-            display: none;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        #points {
-            font-size: 22px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        #challenge-container {
-            margin-top: 30px;
-        }
-        select {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px;
-            border-radius: 8px;
-            width: 200px;
-        }
-        /* Modale per il regolamento */
-        #regulation-modal {
-            display: none; /* Nascondi il modale di default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Sfondo semitrasparente */
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        #regulation-modal .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 80%;
-            text-align: left;
-        }
-        #regulation-modal .close {
-            background-color: red;
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        /* Modale di congratulazioni */
-        #congratulations-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        #congratulations-modal .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            max-width: 400px;
-            width: 80%;
-        }
-        #congratulations-modal .close {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
+
+        /* Aggiunta animazione per i fuochi d'artificio */
+        @keyframes fireworks {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
         }
 
-        /* Nuovo design per il timer */
-        #timer-container {
-            position: relative;
-            width: 80%;
-            max-width: 500px;
-            margin: 20px auto;
-            height: 50px;
-            border-radius: 25px;
-            background: #ddd;
-        }
-        #timer-bar {
-            height: 100%;
-            width: 100%;
-            background: #4CAF50;
-            border-radius: 25px;
-            transition: width 1s linear;
-        }
-        #timer-number {
+        .firework {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            font-weight: bold;
-        }
-	    /* Icone accanto ai pulsanti */
-        .button.accept::before {
-            content: "✅ "; /* Emoji accanto al testo */
-            margin-right: 10px;
+            border-radius: 50%;
+            background-color: #ff0000;
+            width: 20px;
+            height: 20px;
+            animation: fireworks 1s ease-out forwards;
+            opacity: 0;
         }
 
-        .button.refuse::before {
-            content: "❌ "; /* Emoji accanto al testo */
-            margin-right: 10px;
+        /* Animazione dell'effetto fuochi d'artificio */
+        .firework:nth-child(odd) {
+            background-color: #ff0;
         }
 
-        .button.destiny::before {
-            content: "⭐ "; /* Emoji accanto al testo */
-            margin-right: 10px;
+        .firework:nth-child(even) {
+            background-color: #0ff;
         }
 
-        .button.complete-challenge::before {
-            content: "🏆 "; /* Emoji accanto al testo */
-            margin-right: 10px;
-        }
-
-        .button.red::before {
-            content: "🔄 "; /* Emoji accanto al testo */
-            margin-right: 10px;
-        }
-
-        .button.start::before {
-            content: "🚀 "; /* Emoji accanto al testo */
-            margin-right: 10px;
-        }
-
-        .button.circle::before {
-            content: " ❓ "; /* Emoji accanto al testo */
-            font-size: 20px;
-        }
     </style>
 </head>
 <body>
@@ -529,53 +347,47 @@ function selectCharacter() {
 
                 if (duration <= 0) {
                     clearInterval(timerInterval);
-                    alert("Tempo scaduto! Torniamo al gioco!");
-                    returnToGameScreen();
+                    completeChallenge();
                 }
             }, 1000);
         }
 
         function completeChallenge() {
-            clearInterval(timerInterval);  // Ferma il timer
             points += currentChallenge.points;
             document.getElementById('points-value').innerText = points;
-            returnToGameScreen();
-            checkForWinner();
+            showFireworks();  // Mostra i fuochi d'artificio
+            showCongratulations();
         }
 
-        function returnToGameScreen() {
+        function showCongratulations() {
+            document.getElementById('final-points').innerText = points;
+            document.getElementById('winner-name').innerText = character;
             document.getElementById('challenge-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('points').classList.remove('hidden');
+            document.getElementById('congratulations-modal').classList.remove('hidden');
         }
 
-        function changeChallenge() {
-            clearInterval(timerInterval);  // Ferma il timer
-            returnToGameScreen();
-        }
-
-        function showRegulation() {
-            document.getElementById('regulation-modal').style.display = 'flex';
+        function showFireworks() {
+            // Creazione dell'effetto fuochi d'artificio
+            for (let i = 0; i < 10; i++) {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.top = `${Math.random() * 100}%`;
+                firework.style.left = `${Math.random() * 100}%`;
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1000);  // Rimuove il fuoco d'artificio dopo l'animazione
+            }
         }
 
         function closeRegulation() {
             document.getElementById('regulation-modal').style.display = 'none';
         }
 
-        function checkForWinner() {
-            if (points >= 50) {
-                showCongratulations();
-            }
-        }
-
-        function showCongratulations() {
-            document.getElementById('winner-name').innerText = character;
-            document.getElementById('final-points').innerText = points;
-            document.getElementById('congratulations-modal').style.display = 'flex';
-        }
-
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
+        }
+
+        function showRegulation() {
+            document.getElementById('regulation-modal').style.display = 'block';
         }
     </script>
 </body>
