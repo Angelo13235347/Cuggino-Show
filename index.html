@@ -456,10 +456,10 @@ function selectCharacter() {
             document.getElementById('points').classList.remove('hidden');
         }
 
-        function changeChallenge() {
-            clearInterval(timerInterval);  // Ferma il timer
-            returnToGameScreen();
-        }
+       function changeChallenge() {
+    clearInterval(timerInterval);  // Ferma il timer
+    returnToGameScreen();  // Torna alla schermata di gioco senza audio
+}
 
         function showRegulation() {
             document.getElementById('regulation-modal').style.display = 'flex';
