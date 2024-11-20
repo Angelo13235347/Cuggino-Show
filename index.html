@@ -456,9 +456,14 @@ function selectCharacter() {
             document.getElementById('points').classList.remove('hidden');
         }
 
-       function changeChallenge() {
-       clearInterval(timerInterval);  // Ferma il timer
-       returnToGameScreen();  // Torna alla schermata di gioco senza audio
+    // Funzione per cambiare la sfida
+function changeChallenge() {
+    clearInterval(timerInterval); // Ferma il timer
+    if (typeof timeUpAudio !== 'undefined' && timeUpAudio) {
+        timeUpAudio.pause();  // Ferma l'audio del tempo scaduto
+        timeUpAudio.currentTime = 0;  // Riporta l'audio all'inizio
+    }
+    returnToGameScreen(); // Torna alla schermata di gioco senza audio
 }
 
         function showRegulation() {
