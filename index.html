@@ -80,27 +80,6 @@
         .button.complete-challenge:hover {
             background-color: #9B59B6; /* Viola chiaro */
         }
-		// Riferimenti agli elementi
-const audio = document.getElementById('audio-player'); // Audio player
-const challengeText = document.getElementById('selected-challenge'); // Div per la sfida
-const challengeButtons = document.querySelectorAll('.challenge-button'); // Pulsanti delle sfide
-
-// Aggiungi l'evento `ended` per quando l'audio finisce
-audio.addEventListener('ended', function() {
-    // Mostra la sfida dopo la fine dell'audio
-    challengeText.style.display = 'block'; // Mostra il div
-    challengeText.classList.add('show');   // Aggiungi la classe per l'animazione
-});
-
-// Funzione per gestire la sfida scelta
-challengeButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const challenge = button.dataset.challenge; // Ottieni il testo della sfida dal data-attribute
-        challengeText.innerHTML = challenge;       // Imposta il testo della sfida nel div
-        audio.play();                              // Avvia l'audio
-    });
-});
-
         .hidden {
             display: none;
         }
@@ -278,30 +257,10 @@ challengeButtons.forEach(button => {
     cursor: pointer;
     font-size: 16px;
 }
-#selected-challenge {
-    font-size: 24px;
-    text-align: center;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-#selected-challenge.show {
-    opacity: 1;
-}
-
 
     </style>
 </head>
 <body>
-<div id="selected-challenge" style="display: none;">
-    <!-- La sfida scelta verrà visualizzata qui -->
-</div>
-
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
@@ -328,6 +287,7 @@ challengeButtons.forEach(button => {
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
+
 
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
