@@ -261,6 +261,9 @@
     </style>
 </head>
 <body>
+
+<div id="turn-message" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;"></div>
+
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
@@ -287,6 +290,7 @@
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
+
 
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
@@ -390,12 +394,31 @@ function playAudioAndStartTimer(audioFile, points) {
 ],
 	       };
 		   
+		   let players = [];  // Array per memorizzare i giocatori
+let currentPlayerIndex = 0;  // Indice del giocatore corrente
+		   
 function selectCharacter() {
-            character = document.getElementById('character-select').value;
-            document.getElementById('character-name').innerText = character;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
+    character = document.getElementById('character-select').value;
+    players.push(character);  // Aggiungi il personaggio selezionato all'array di giocatori
+    document.getElementById('character-name').innerText = character;
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+    updateTurnMessage();  // Mostra il messaggio di turno
         }
+
+function updateTurnMessage() {
+    const currentPlayer = players[currentPlayerIndex];
+    const nextPlayer = players[(currentPlayerIndex + 1) % players.length];  // Il prossimo giocatore
+
+    // Mostra il messaggio "Ora è il turno di..." su tutti i dispositivi
+    document.getElementById('turn-message').innerText = `Ora è il turno di ${currentPlayer}`;
+
+    // Messaggio per il giocatore che sta per giocare
+    alert(`E' il tuo turno, ${currentPlayer}, scegli una delle tre sfide e inizia a giocare`);
+
+    // Aggiorna il turno
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;  // Passa al prossimo giocatore
+}
 
         function acceptChallenge() {
 		    playSound('accept'); // Riproduce il suono per "Sfida accettata"
@@ -418,42 +441,6 @@ function selectCharacter() {
         function loadChallenge() {
     const challenge = getRandomChallenge(currentChallengeType);  // Recupera la sfida
     currentChallenge = challenge;
-
-// Variabili globali per gestire i turni
-let players = ["Angelo", "Matilde", "Eleonora", "Rita", "Federico", "Rebecca", "Alessandro", "Francesco", "Giulia"];
-let currentPlayerIndex = 0;  // Inizialmente il primo giocatore
-let currentPlayer = players[currentPlayerIndex]; // Nome del primo giocatore
-
-// Funzione per aggiornare il turno del giocatore
-function updateTurnDisplay() {
-    // Mostra "Ora è il turno di [nome giocatore]" su tutti i dispositivi
-    document.getElementById('current-turn').innerText = `Ora è il turno di ${currentPlayer}`;
-
-    // Mostra il messaggio "E' il tuo turno" solo al giocatore corrente
-    if (currentPlayer === character) {  // 'character' è la variabile che identifica il giocatore corrente
-        document.getElementById('game-screen').classList.remove('hidden');
-        document.getElementById('challenge-screen').classList.add('hidden');
-        document.getElementById('game-screen').innerHTML = `<h3>E' il tuo turno, scegli una delle tre sfide e inizia a giocare</h3>`;
-    } else {
-        // Se non è il turno del giocatore corrente, nascondiamo il suo schermo di gioco
-        document.getElementById('game-screen').classList.add('hidden');
-    }
-}
-
-// Funzione per passare al prossimo giocatore
-function nextPlayer() {
-    currentPlayerIndex = (currentPlayerIndex + 1) % players.length; // Incrementa l'indice, ricomincia da 0 se supera la lunghezza
-    currentPlayer = players[currentPlayerIndex]; // Assegna il nuovo giocatore
-    updateTurnDisplay(); // Aggiorna l'interfaccia utente
-}
-
-// Funzione che completa la sfida e passa al prossimo giocatore
-function completeChallenge() {
-    points += currentChallenge.points; // Aggiungi i punti per la sfida completata
-    document.getElementById('points-value').innerText = points; // Aggiorna i punti visualizzati
-
-    nextPlayer(); // Passa al prossimo giocatore
-}
 
     // Mostra la sfida nell'interfaccia utente
     document.getElementById('challenge-title').innerText = challenge.challenge;
@@ -483,7 +470,6 @@ function showTimeUpModal() {
 function closeTimeUpModal() {
     document.getElementById('time-up-modal').style.display = 'none';  // Nasconde il pop-up
 }
-
         function startTimer(points) {
             let duration;
             if (points === 2) {
@@ -514,17 +500,16 @@ function closeTimeUpModal() {
             }, 1000);
         }
 
-        function completeChallenge() {
-            clearInterval(timerInterval);  // Ferma il timer
-            points += currentChallenge.points;
-            document.getElementById('points-value').innerText = points;
-            returnToGameScreen();
-            checkForWinner();
+function completeChallenge() {
+    clearInterval(timerInterval);  // Ferma il timer
+    points += currentChallenge.points;
+    document.getElementById('points-value').innerText = points;
+    returnToGameScreen();
+    checkForWinner();
+    updateTurnMessage();  // Passa al prossimo turno
+}
+
         }
-
-<!-- Elemento per visualizzare il turno del giocatore -->
-<p id="current-turn"></p>
-
 
         function returnToGameScreen() {
             document.getElementById('challenge-screen').classList.add('hidden');
@@ -564,39 +549,5 @@ function closeTimeUpModal() {
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
     <audio id="audio-refuse" src="sfida_rifiutata.mp3"></audio>
     <audio id="audio-destiny" src="mettiti_in_gioco.mp3"></audio>
-	
-	<!-- Aggiungi il tuo script alla fine del body -->
-<script>
-  // Dichiarazione delle variabili globali
-  let players = ["Angelo", "Matilde", "Eleonora", "Rita", "Federico", "Rebecca", "Alessandro", "Francesco", "Giulia"];
-  let currentPlayerIndex = 0;
-  let currentPlayer = players[currentPlayerIndex];
-  
-  // Funzione per aggiornare il turno
-  function updateTurnDisplay() {
-      document.getElementById('current-turn').innerText = `Ora è il turno di ${currentPlayer}`;
-      if (currentPlayer === character) {
-          document.getElementById('game-screen').classList.remove('hidden');
-          document.getElementById('challenge-screen').classList.add('hidden');
-          document.getElementById('game-screen').innerHTML = `<h3>E' il tuo turno, scegli una delle tre sfide e inizia a giocare</h3>`;
-      } else {
-          document.getElementById('game-screen').classList.add('hidden');
-      }
-  }
-
-  // Funzione per passare al prossimo giocatore
-  function nextPlayer() {
-      currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-      currentPlayer = players[currentPlayerIndex];
-      updateTurnDisplay();
-  }
-
-  // Funzione per completare la sfida e passare al prossimo giocatore
-  function completeChallenge() {
-      points += currentChallenge.points;
-      document.getElementById('points-value').innerText = points;
-      nextPlayer();
-  }
-</script>
 </body>
 </html>
