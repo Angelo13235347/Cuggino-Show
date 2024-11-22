@@ -257,6 +257,23 @@
     cursor: pointer;
     font-size: 16px;
 }
+<link rel="stylesheet" href="path/to/your/styles.css">
+
+/* Animazione per la faccina che piange */
+@keyframes cry {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Stile per la faccina che piange */
+#crying-face {
+    animation: cry 1s ease-in-out;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
 
     </style>
 </head>
@@ -285,6 +302,9 @@
         <h3>Il tempo è terminato!</h3>
         <p>Cerca di essere più veloce la prossima volta!</p>
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
+		<div id="crying-face" style="display: none;">
+    😭
+</div>
     </div>
 </div>
 
@@ -524,6 +544,7 @@ function closeTimeUpModal() {
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
         }
+		<script src="path/to/your/script.js"></script>
     </script>
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
     <audio id="audio-refuse" src="sfida_rifiutata.mp3"></audio>
