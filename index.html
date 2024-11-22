@@ -261,6 +261,7 @@
     </style>
 </head>
 <body>
+<audio id="audio-win" src="win_sound.mp3"></audio>
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
@@ -636,12 +637,19 @@ function closeTimeUpModal() {
             }, 1000);
         }
 
-        function completeChallenge() {
-            clearInterval(timerInterval);  // Ferma il timer
-            points += currentChallenge.points;
-            document.getElementById('points-value').innerText = points;
-            returnToGameScreen();
-            checkForWinner();
+function completeChallenge() {
+    clearInterval(timerInterval);  // Ferma il timer
+    points += currentChallenge.points;
+    document.getElementById('points-value').innerText = points;
+
+    // Aggiungi il codice per riprodurre il suono di vittoria
+    let winSound = document.getElementById('audio-win');
+    winSound.currentTime = 0;  // Riavvia l'audio
+    winSound.play();  // Riproduce l'audio
+
+    returnToGameScreen();
+    checkForWinner();  // Se vuoi verificare se è stato raggiunto un punteggio di vittoria
+}
         }
 
         function returnToGameScreen() {
@@ -663,12 +671,13 @@ function closeTimeUpModal() {
             document.getElementById('regulation-modal').style.display = 'none';
         }
 
-        function checkForWinner() {
-            if (points >= 50) {
-                showCongratulations();
-            }
-        }
-
+function checkForWinner() {
+    if (points >= 50) {  // Soglia di vittoria, puoi cambiarla
+        document.getElementById('winner-name').innerText = character;
+        document.getElementById('final-points').innerText = points;
+        document.getElementById('congratulations-modal').style.display = 'flex';
+    }
+}
         function showCongratulations() {
             document.getElementById('winner-name').innerText = character;
             document.getElementById('final-points').innerText = points;
