@@ -686,14 +686,5 @@ function closeTimeUpModal() {
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
     <audio id="audio-refuse" src="sfida_rifiutata.mp3"></audio>
     <audio id="audio-destiny" src="mettiti_in_gioco.mp3"></audio>
-	const video = document.getElementById('intro-video');
-const startScreen = document.getElementById('start-screen');
-
-// Nasconde tutto tranne il video finché non termina
-startScreen.style.display = 'none';
-video.addEventListener('ended', () => {
-    video.style.display = 'none';
-    startScreen.style.display = 'block';
-});
 </body>
 </html>
