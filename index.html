@@ -257,7 +257,32 @@
     cursor: pointer;
     font-size: 16px;
 }
+        /* Stilizzazione per il video */
+        video {
+            max-width: 90%; /* Video si adatta alla larghezza del dispositivo */
+            height: auto;
+            border-radius: 15px; /* Bordo arrotondato */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra morbida per il video */
+        }
 
+        /* Stile di overlay per centrare il video sulla pagina */
+        .video-container {
+            position: fixed; /* Posiziona il video fisso durante il caricamento */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centra il video esattamente al centro */
+            background-color: rgba(0, 0, 0, 0.5); /* Sovrapposizione sfocata di sfondo */
+            padding: 20px;
+            border-radius: 20px;
+            z-index: 1; /* Assicura che il video sia sopra gli altri contenuti */
+        }
+
+        /* Stile per la schermata di benvenuto */
+        #welcome-screen {
+            display: none; /* Nascondi inizialmente la schermata di benvenuto */
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -265,6 +290,7 @@
     <div class="video-container" id="video-container">
         <video id="intro-video" autoplay>
             <source src="lorenzo.mp4" type="video/mp4">
+            Il tuo browser non supporta i video HTML5.
         </video>
     </div>
 
@@ -295,7 +321,6 @@
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
-
 
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
@@ -351,6 +376,17 @@
     </div>
 
     <script>
+// Rileva il video e la schermata di benvenuto
+        var video = document.getElementById('intro-video');
+        var videoContainer = document.getElementById('video-container');
+        var welcomeScreen = document.getElementById('welcome-screen');
+
+        // Quando il video finisce, rimuovi il video e mostra la schermata di benvenuto
+        video.onended = function() {
+            videoContainer.style.display = 'none'; // Nascondi il contenitore del video
+            welcomeScreen.style.display = 'block'; // Mostra la schermata di benvenuto
+        };
+	    
         let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
@@ -685,18 +721,6 @@ function closeTimeUpModal() {
 
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
-        }
-        // Rileva il video e la schermata di benvenuto
-        var video = document.getElementById('intro-video');
-        var videoContainer = document.getElementById('video-container');
-        var welcomeScreen = document.getElementById('welcome-screen');
-
-        // Quando il video finisce, nascondilo e mostra la schermata di benvenuto
-        video.onended = function() {
-            setTimeout(function() {
-                videoContainer.style.display = 'none'; // Nascondi il contenitore del video
-                welcomeScreen.style.display = 'block'; // Mostra la schermata di benvenuto
-            }, 500); // Aggiungi una piccola pausa prima della transizione
         }
     </script>
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
