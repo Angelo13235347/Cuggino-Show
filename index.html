@@ -262,19 +262,14 @@
 </head>
 <body>
     <div class="container" id="start-screen">
-	  <video id="intro-video" width="100%" controls autoplay>
+    <!-- Video di introduzione -->
+    <video id="intro-video" width="100%" controls autoplay muted>
         <source src="Lorenzo.mp4" type="video/mp4">
         Il tuo browser non supporta la riproduzione video.
     </video>
-	    
-    <!-- Script per gestire il video e passare alla selezione dei personaggi -->
-    <script>
-        const video = document.getElementById('intro-video');
 
-        // Al termine del video, cambia schermata alla selezione dei personaggi
-        video.addEventListener('ended', () => {
-            window.location.href = "selezione-personaggi.html"; // Cambia con il percorso della pagina di selezione personaggi
-        });
+    <!-- Contenuto che appare dopo il video -->
+    <div id="welcome-screen" style="display: none;">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
