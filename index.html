@@ -261,7 +261,16 @@
     </style>
 </head>
 <body>
-    <div class="container" id="start-screen">
+    <!-- Video introduttivo -->
+    <div id="intro-video">
+        <video id="intro-video-element" width="100%" autoplay onended="startGame()">
+            <source src="Lorenzo.mp4" type="video/mp4">
+            Il tuo browser non supporta il formato video.
+        </video>
+    </div>
+
+    <!-- Contenuto del gioco -->
+    <div class="container hidden" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
@@ -287,7 +296,6 @@
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
-
 
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
@@ -343,6 +351,14 @@
     </div>
 
     <script>
+	    // Funzione per nascondere il video e avviare il gioco
+        function startGame() {
+            // Nasconde il video
+            document.getElementById('intro-video').classList.add('hidden');
+
+            // Mostra la schermata di selezione del personaggio
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
         let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
