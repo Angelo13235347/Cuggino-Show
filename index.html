@@ -102,32 +102,7 @@
             border-radius: 8px;
             width: 200px;
         }
-      /* Stilizzazione per il video */
-        video {
-            max-width: 90%; /* Video si adatta alla larghezza del dispositivo */
-            height: auto;
-            border-radius: 15px; /* Bordo arrotondato */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra morbida per il video */
-            transition: opacity 1s ease-in-out; /* Transizione per un effetto di scomparsa o comparsa graduale */
-            opacity: 1;
-        }
-
-        /* Quando il video non è visibile (per esempio, durante il caricamento o transizione) */
-        video.hidden {
-            opacity: 0;
-        }
-
-        /* Stile di overlay per centrare il video sulla pagina */
-        .video-container {
-            position: fixed; /* Posiziona il video fisso durante il caricamento */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Centra il video esattamente al centro */
-            background-color: rgba(0, 0, 0, 0.5); /* Sovrapposizione sfocata di sfondo */
-            padding: 20px;
-            border-radius: 20px;
-        }
-	    
+	
         /* Modale per il regolamento */
         #regulation-modal {
             display: none; /* Nascondi il modale di default */
