@@ -352,19 +352,6 @@
     </div>
 
     <script>
-	            // Rileva il video e la schermata di benvenuto
-        var video = document.getElementById('intro-video');
-        var videoContainer = document.getElementById('video-container');
-        var welcomeScreen = document.getElementById('welcome-screen');
-
-        // Quando il video finisce, nascondilo e mostra la schermata di benvenuto
-        video.onended = function() {
-            setTimeout(function() {
-                videoContainer.style.display = 'none'; // Nascondi il contenitore del video
-                welcomeScreen.style.display = 'block'; // Mostra la schermata di benvenuto
-            }, 500); // Aggiungi una piccola pausa prima della transizione
-        }
-	    
         let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
