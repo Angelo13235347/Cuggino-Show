@@ -286,7 +286,7 @@
     </style>
 </head>
 <body>
-    <!-- Video che si mostra inizialmente -->
+<!-- Video che si mostra inizialmente -->
     <div class="video-container" id="video-container">
         <video id="intro-video" autoplay>
             <source src="lorenzo.mp4" type="video/mp4">
@@ -376,15 +376,17 @@
     </div>
 
     <script>
-// Rileva il video e la schermata di benvenuto
+  // Rileva il video e la schermata di benvenuto
         var video = document.getElementById('intro-video');
         var videoContainer = document.getElementById('video-container');
         var welcomeScreen = document.getElementById('welcome-screen');
 
-        // Quando il video finisce, rimuovi il video e mostra la schermata di benvenuto
+        // Funzione per mostrare la schermata di benvenuto al termine del video
         video.onended = function() {
-            videoContainer.style.display = 'none'; // Nascondi il contenitore del video
-            welcomeScreen.style.display = 'block'; // Mostra la schermata di benvenuto
+            // Nascondi il video
+            videoContainer.style.display = 'none';
+            // Mostra la schermata di benvenuto
+            welcomeScreen.style.display = 'block';
         };
 	    
         let audioElement = new Audio();  // Crea un oggetto audio globale
