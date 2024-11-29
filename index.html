@@ -239,9 +239,7 @@
     align-items: center;
     justify-content: center;
 }
-#intro-video.hidden {
-    display: none;
-}
+
 #time-up-modal .modal-content {
     background-color: white;
     padding: 20px;
@@ -263,12 +261,7 @@
     </style>
 </head>
 <body>
-<div class="container hidden" id="start-screen">
-    <!-- Video di introduzione con audio -->
-    <video id="intro-video" autoplay>
-        <source src="video_di_intro.mp4" type="video/mp4">
-        Il tuo browser non supporta il tag video.
-    </video>
+    <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
@@ -294,6 +287,7 @@
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
+
 
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
@@ -552,7 +546,8 @@ function playAudioAndStartTimer(audioFile, points) {
     { "challenge": "Crea un gioco da tavolo usando materiali che hai in casa", "points": 10 },
     { "challenge": "Trova 5 parole che abbiano la stessa radice", "points": 10 }
 ],
-	       };  
+	       };
+		   
 function selectCharacter() {
             character = document.getElementById('character-select').value;
             document.getElementById('character-name').innerText = character;
