@@ -552,13 +552,7 @@ function playAudioAndStartTimer(audioFile, points) {
     { "challenge": "Crea un gioco da tavolo usando materiali che hai in casa", "points": 10 },
     { "challenge": "Trova 5 parole che abbiano la stessa radice", "points": 10 }
 ],
-	       };
-		        // Quando il video finisce, nascondiamo il video e mostriamo il gioco
-        const introVideo = document.getElementById("intro-video");
-        introVideo.onended = function() {
-            introVideo.classList.add("hidden"); // Nascondi il video
-            document.getElementById("start-screen").classList.remove("hidden"); // Mostra la schermata di inizio gioco
-        };   
+	       };  
 function selectCharacter() {
             character = document.getElementById('character-select').value;
             document.getElementById('character-name').innerText = character;
