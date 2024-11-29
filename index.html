@@ -266,6 +266,15 @@
         <source src="Lorenzo.mp4" type="video/mp4">
         Il tuo browser non supporta la riproduzione video.
     </video>
+	    
+    <!-- Script per gestire il video e passare a una nuova schermata -->
+    <script>
+        const video = document.getElementById('intro-video');
+
+        // Al termine del video, cambia schermata
+        video.addEventListener('ended', () => {
+            window.location.href = "schermata-successiva.html"; // Cambia con il percorso del file desiderato
+        });
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
