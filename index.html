@@ -257,45 +257,9 @@
     cursor: pointer;
     font-size: 16px;
 }
-        /* Stilizzazione per il video */
-        video {
-            max-width: 90%; /* Video si adatta alla larghezza del dispositivo */
-            height: auto;
-            border-radius: 15px; /* Bordo arrotondato */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra morbida per il video */
-        }
 
-        /* Stile di overlay per centrare il video sulla pagina */
-        .video-container {
-            position: fixed; /* Posiziona il video fisso durante il caricamento */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Centra il video esattamente al centro */
-            background-color: rgba(0, 0, 0, 0.5); /* Sovrapposizione sfocata di sfondo */
-            padding: 20px;
-            border-radius: 20px;
-            z-index: 1; /* Assicura che il video sia sopra gli altri contenuti */
-        }
-
-        /* Stile per la schermata di benvenuto */
-        #welcome-screen {
-            display: none; /* Nascondi inizialmente la schermata di benvenuto */
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
-<body>
-<!-- Video che si mostra inizialmente -->
-    <div class="video-container" id="video-container">
-        <video id="intro-video" autoplay>
-            <source src="lorenzo.mp4" type="video/mp4">
-            Il tuo browser non supporta i video HTML5.
-        </video>
-    </div>
-
-    <!-- Schermata di benvenuto per la selezione del personaggio -->
-    <div id="welcome-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
@@ -321,6 +285,7 @@
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
+
 
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
@@ -376,19 +341,6 @@
     </div>
 
     <script>
-  // Rileva il video e la schermata di benvenuto
-        var video = document.getElementById('intro-video');
-        var videoContainer = document.getElementById('video-container');
-        var welcomeScreen = document.getElementById('welcome-screen');
-
-        // Funzione per mostrare la schermata di benvenuto al termine del video
-        video.onended = function() {
-            // Nascondi il video
-            videoContainer.style.display = 'none';
-            // Mostra la schermata di benvenuto
-            welcomeScreen.style.display = 'block';
-        };
-	    
         let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
