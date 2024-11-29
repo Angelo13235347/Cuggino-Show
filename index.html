@@ -261,11 +261,15 @@
     </style>
 </head>
 <body>
-<video width="100%" height="auto" controls>
-  <source src="Lorenzo.mp4" type="video/mp4">
-  Il tuo browser non supporta il tag video.
-</video>
-    <div class="container" id="start-screen">
+    <!-- Video che si mostra inizialmente -->
+    <div class="video-container" id="video-container">
+        <video id="intro-video" autoplay>
+            <source src="lorenzo.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Schermata di benvenuto per la selezione del personaggio -->
+    <div id="welcome-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
@@ -682,7 +686,7 @@ function closeTimeUpModal() {
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
         }
-	            // Rileva il video e la schermata di benvenuto
+        // Rileva il video e la schermata di benvenuto
         var video = document.getElementById('intro-video');
         var videoContainer = document.getElementById('video-container');
         var welcomeScreen = document.getElementById('welcome-screen');
