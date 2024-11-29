@@ -6,18 +6,12 @@
     <title>Gioco Capodanno</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff; /* Blu chiaro */
+            font-family: Arial, sans-serif;
+            background-color: #d0f0fd; /* Blu tenue */
             color: #333;
             text-align: center;
             padding: 20px;
-            margin: 0;
-            box-sizing: border-box;
         }
-		        h1, h2, h3 {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            color: #444;
-			}
         .button {
             color: white;
             border: none;
@@ -25,9 +19,8 @@
             font-size: 18px;
             cursor: pointer;
             margin: 10px 0;
-            border-radius: 12px;
+            border-radius: 8px;
             width: 100%;
-            transition: transform 0.3s ease, background-color 0.3s ease;
         }
         .button.accept {
             background-color: #4CAF50; /* Verde */
@@ -67,15 +60,15 @@
     transform: scale(1.1); /* Aumenta leggermente le dimensioni al passaggio del mouse */
 }
         .button.start {
-            background: linear-gradient(to right, #FF7E5F, #FEB47B);
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+    background: linear-gradient(to right, #FF7E5F, #FEB47B); /* Sfumatura arancione-giallo */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s ease;
 }
 .button.start:hover {
     background: linear-gradient(to right, #FEB47B, #FF7E5F); /* Cambio di sfumatura al passaggio del mouse */
@@ -269,6 +262,10 @@
 </head>
 <body>
     <div class="container" id="start-screen">
+	  <video id="intro-video" width="100%" controls autoplay>
+        <source src="Lorenzo.mp4" type="video/mp4">
+        Il tuo browser non supporta la riproduzione video.
+    </video>
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
@@ -689,5 +686,14 @@ function closeTimeUpModal() {
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
     <audio id="audio-refuse" src="sfida_rifiutata.mp3"></audio>
     <audio id="audio-destiny" src="mettiti_in_gioco.mp3"></audio>
+	const video = document.getElementById('intro-video');
+const startScreen = document.getElementById('start-screen');
+
+// Nasconde tutto tranne il video finché non termina
+startScreen.style.display = 'none';
+video.addEventListener('ended', () => {
+    video.style.display = 'none';
+    startScreen.style.display = 'block';
+});
 </body>
 </html>
