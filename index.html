@@ -262,13 +262,6 @@
 </head>
 <body>
     <div class="container" id="start-screen">
-<video id="intro-video" width="100%" autoplay>
-    <source src="Lorenzo.mp4" type="video/mp4">
-    Il tuo browser non supporta il video.
-</video>
-
-<!-- Schermata iniziale -->
-<div class="container hidden" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
@@ -369,21 +362,6 @@
         audioElement.play();
     }
 }
-// Funzione che viene chiamata una volta che il video è terminato
-document.getElementById('intro-video').onended = function() {
-    // Nascondi il video e mostra la schermata del gioco
-    document.getElementById('intro-video').style.display = 'none';
-    document.getElementById('start-screen').classList.remove('hidden');
-};
-
-// Funzione per iniziare il gioco e selezionare il personaggio
-function selectCharacter() {
-    character = document.getElementById('character-select').value;
-    document.getElementById('character-name').innerText = character;
-    document.getElementById('start-screen').classList.add('hidden');
-    document.getElementById('game-screen').classList.remove('hidden');
-}
-    
 function playAudioAndStartTimer(audioFile, points) {
     audioElement.pause(); // Ferma l'audio precedente
     audioElement.src = audioFile;  // Imposta il nuovo file audio
