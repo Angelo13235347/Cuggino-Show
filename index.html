@@ -270,18 +270,14 @@
     </style>
 </head>
 <body>
-	    <div class="container" id="start-screen">
+  <div class="container" id="start-screen">
         <h1>Benvenuto/a al Cuggi-Show!</h1>
-<p>Ascolta attentamente il video prima di iniziare a giocare!</p>
+	  <p>Ascolta attentamente il video prima di iniziare a giocare!</p>
 	        <!-- Aggiungi un video intro -->
     <video id="intro-video" width="80%" controls autoplay>
         <source src="Lorenzo.mp4" type="video/mp4">
         Il tuo browser non supporta il tag video.
     </video>
-<button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
-    </div>
-	
-	<div class="container" id="selectCharacter">
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
             <option value="Angelo">Angelo</option>
@@ -295,6 +291,8 @@
             <option value="Giulia">Giulia</option>
         </select>
         <br>
+        <button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
+    </div>
 <!-- Finestra modale per il tempo scaduto -->
 <div id="time-up-modal">
     <div class="modal-content">
