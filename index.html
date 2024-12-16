@@ -256,33 +256,6 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-}
-        /* Codice CSS per l'animazione dell'esplosione */
-        @keyframes explosion {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(1.5);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(2);
-            }
-        }
-
-        .explosion {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            background-color: #FF5722;
-            border-radius: 50%;
-            animation: explosion 1s ease-out;
         }
     </style>
 </head>
@@ -290,7 +263,7 @@
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
 	        <!-- Aggiungi un video intro -->
-    <video id="intro-video" width="80%" controls autoplay>
+    <video id="intro-video" width="60" controls autoplay>
         <source src="Lorenzo.mp4" type="video/mp4">
         Il tuo browser non supporta il tag video.
     </video>
