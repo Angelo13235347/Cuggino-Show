@@ -10,7 +10,7 @@
             background-color: #d0f0fd; /* Blu tenue */
             color: #333;
             text-align: center;
-            padding: 16px;
+            padding: 18px;
         }
         .button {
             color: white;
@@ -257,7 +257,7 @@
     cursor: pointer;
     font-size: 16px;
         }
-	    #intro-video {
+#intro-video {
     width: 60%; /* Riduci la dimensione del video al 60% della larghezza del contenitore */
     max-width: 360px; /* Imposta una dimensione massima */
     height: auto; /* Mantieni le proporzioni */
@@ -270,20 +270,20 @@
     </style>
 </head>
 <body>
-    <!-- Schermata iniziale -->
-    <div class="container" id="start-screen">
-        <h1>Benvenuto/a al Cuggi Show!</h1>
-        <p>Guarda il video introduttivo e preparati al gioco!</p>
-        <video id="intro-video" width="80%" controls autoplay>
-            <source src="Lorenzo.mp4" type="video/mp4">
-            Il tuo browser non supporta il tag video.
-        </video>
-        <button class="button start" onclick="goToSelectCharacter()">Continua</button>
+	    <div class="container" id="start-screen">
+        <h1>Benvenuto/a al Cuggi-Show!</h1>
+<p>Ascolta attentamente il video prima di iniziare a giocare!</p>
+	        <!-- Aggiungi un video intro -->
+    <video id="intro-video" width="80%" controls autoplay>
+        <source src="Lorenzo.mp4" type="video/mp4">
+        Il tuo browser non supporta il tag video.
+    </video>
+<button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
     </div>
 	
-         <!-- Schermata di selezione del personaggio -->
-    <div class="container hidden" id="select-character">
-        <h2>Scegli il tuo personaggio:</h2>
+	<div class="container" id="selectCharacter">
+        <p>Scegli il tuo personaggio per iniziare a giocare:</p>
+        <select id="character-select">
             <option value="Angelo">Angelo</option>
             <option value="Matilde">Matilde</option>
             <option value="Eleonora">Eleonora</option>
@@ -295,9 +295,6 @@
             <option value="Giulia">Giulia</option>
         </select>
         <br>
-        <button class="button start" onclick="startGame()">Inizia il gioco</button>
-    </div>
-	
 <!-- Finestra modale per il tempo scaduto -->
 <div id="time-up-modal">
     <div class="modal-content">
@@ -306,7 +303,6 @@
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
-<!-- Schermata del gioco -->
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
         <p>Scegli la tua azione:</p>
@@ -361,23 +357,6 @@
     </div>
 
     <script>
-        // Funzione per mostrare la schermata di selezione personaggio
-        function goToSelectCharacter() {
-            document.getElementById("start-screen").classList.add("hidden");
-            document.getElementById("select-character").classList.remove("hidden");
-        }
-
-        // Funzione per iniziare il gioco dopo aver scelto un personaggio
-        function startGame() {
-            const selectedCharacter = document.getElementById("character-select").value;
-            if (selectedCharacter) {
-                document.getElementById("character-name").textContent = `Benvenuto, ${selectedCharacter}!`;
-                document.getElementById("select-character").classList.add("hidden");
-                document.getElementById("game-screen").classList.remove("hidden");
-            } else {
-                alert("Seleziona un personaggio per continuare!");
-            }
-	    
         let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
