@@ -10,7 +10,7 @@
             background-color: #d0f0fd; /* Blu tenue */
             color: #333;
             text-align: center;
-            padding: 18px;
+            padding: 16px;
         }
         .button {
             color: white;
@@ -257,7 +257,7 @@
     cursor: pointer;
     font-size: 16px;
         }
-#intro-video {
+	    #intro-video {
     width: 60%; /* Riduci la dimensione del video al 60% della larghezza del contenitore */
     max-width: 360px; /* Imposta una dimensione massima */
     height: auto; /* Mantieni le proporzioni */
@@ -270,18 +270,14 @@
     </style>
 </head>
 <body>
-	    <div class="container" id="start-screen">
+    <div class="container" id="start-screen">
         <h1>Benvenuto/a al Cuggi-Show!</h1>
-<p>Ascolta attentamente il video prima di iniziare a giocare!</p>
 	        <!-- Aggiungi un video intro -->
     <video id="intro-video" width="80%" controls autoplay>
         <source src="Lorenzo.mp4" type="video/mp4">
         Il tuo browser non supporta il tag video.
     </video>
-<button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
-    </div>
-	
-	<div class="container" id="selectCharacter">
+    <br>
         <p>Scegli il tuo personaggio per iniziare a giocare:</p>
         <select id="character-select">
             <option value="Angelo">Angelo</option>
@@ -295,6 +291,9 @@
             <option value="Giulia">Giulia</option>
         </select>
         <br>
+        <button class="button start" onclick="selectCharacter()">Inizia il gioco</button>
+    </div>
+	
 <!-- Finestra modale per il tempo scaduto -->
 <div id="time-up-modal">
     <div class="modal-content">
@@ -303,6 +302,8 @@
         <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
     </div>
 </div>
+
+
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
         <p>Scegli la tua azione:</p>
