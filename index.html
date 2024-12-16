@@ -257,13 +257,23 @@
     cursor: pointer;
     font-size: 16px;
         }
+#intro-video {
+    width: 60%; /* Riduci la dimensione del video al 60% della larghezza del contenitore */
+    max-width: 400px; /* Imposta una dimensione massima */
+    height: auto; /* Mantieni le proporzioni */
+    border: 5px solid #4CAF50; /* Aggiunge una cornice verde di 5px */
+    border-radius: 10px; /* Arrotonda leggermente gli angoli */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Aggiunge un'ombra per un effetto elegante */
+    margin: 20px auto; /* Centra il video verticalmente e orizzontalmente */
+    display: block; /* Centra il video all'interno del suo contenitore */
+}
     </style>
 </head>
 <body>
     <div class="container" id="start-screen">
         <h1>Benvenuto al Gioco di Capodanno!</h1>
 	        <!-- Aggiungi un video intro -->
-    <video id="intro-video" width="78" controls autoplay>
+    <video id="intro-video" width="80" controls autoplay>
         <source src="Lorenzo.mp4" type="video/mp4">
         Il tuo browser non supporta il tag video.
     </video>
