@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuggi Show</title>
     <style>
+	    .hidden {
+    display: none;
+}
         body {
             font-family: 'Times New Roman', serif;
             background-color: #d0f0fd; /* Blu tenue */
@@ -677,6 +680,9 @@ function closeTimeUpModal() {
     returnToGameScreen();
 }
             }, 1000);
+		
+		// Mostra la domanda quando il timer parte
+    document.getElementById("challenge").classList.remove("hidden");
         }
 
         function completeChallenge() {
@@ -721,16 +727,6 @@ function closeTimeUpModal() {
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
         }
-function triggerExplosion() {
-    const explosionDiv = document.createElement('div');
-    explosionDiv.classList.add('explosion');
-    document.body.appendChild(explosionDiv);
-
-    // Rimuovi l'elemento dopo l'animazione
-    setTimeout(() => {
-        explosionDiv.remove();
-    }, 1000); // Rimuove dopo 1 secondo
-} 
     </script>
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
     <audio id="audio-refuse" src="sfida_rifiutata.mp3"></audio>
