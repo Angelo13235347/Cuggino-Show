@@ -270,7 +270,7 @@
     </style>
 </head>
 <body>
-  <<!-- Schermata di benvenuto -->
+    <!-- Schermata di benvenuto -->
     <div class="container" id="welcome-screen">
         <h1>Benvenuto/a al Cuggi-Show!</h1>
         <p>Ascolta attentamente il video prima di iniziare a giocare!</p>
@@ -301,15 +301,6 @@
         <br>
         <button class="button start" onclick="startGame()">Inizia il gioco</button>
     </div>
-
-<!-- Finestra modale per il tempo scaduto -->
-<div id="time-up-modal">
-    <div class="modal-content">
-        <h3>Il tempo è terminato!</h3>
-        <p>Cerca di essere più veloce la prossima volta!</p>
-        <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
-    </div>
-</div>
 <!-- Schermata di gioco -->
     <div class="container hidden" id="game-screen">
         <h2 id="character-name"></h2>
@@ -318,7 +309,15 @@
         <button class="button refuse" onclick="refuseChallenge()">Rifiuta la sfida</button>
         <button class="button destiny" onclick="destinyChallenge()">Mettiti alla Prova</button>
     </div>
-
+	
+<!-- Finestra modale per il tempo scaduto -->
+<div id="time-up-modal">
+    <div class="modal-content">
+        <h3>Il tempo è terminato!</h3>
+        <p>Cerca di essere più veloce la prossima volta!</p>
+        <button class="close" onclick="closeTimeUpModal()">Chiudi</button>
+    </div>
+</div>
     <div class="container hidden" id="challenge-screen">
         <h3 id="challenge-title"></h3>
         <p id="challenge-description"></p>
