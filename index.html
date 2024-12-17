@@ -370,7 +370,12 @@ function showCharacterSelection() {
     // Mostra la schermata di selezione personaggio
     document.getElementById("character-screen").classList.remove("hidden");
 }
-	    
+function startGame() {
+    // Nasconde la schermata di selezione personaggio
+    document.getElementById("character-screen").classList.add("hidden");
+    // Mostra la schermata di gioco
+    document.getElementById("game-screen").classList.remove("hidden");
+}	    
         let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
