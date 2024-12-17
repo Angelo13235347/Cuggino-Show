@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuggi Show</title>
     <style>
-	    .hidden {
-    display: none;
-}
         body {
             font-family: 'Times New Roman', serif;
             background-color: #d0f0fd; /* Blu tenue */
@@ -581,7 +578,7 @@ function playAudioAndStartTimer(audioFile, points) {
     { "challenge": "Trova un oggetto che abbia una storia legata alla tua famiglia", "points": 10 },
     { "challenge": "Crea un gioco da tavolo usando materiali che hai in casa", "points": 10 },
     { "challenge": "Trova 5 parole che abbiano la stessa radice", "points": 10 }
-],    
+],
 	       };
 document.getElementById('intro-video').addEventListener('ended', function() {
     // Nascondi il video quando è terminato
@@ -638,6 +635,7 @@ function selectCharacter() {
         playAudioAndStartTimer('mettiti_in_gioco.mp3', challenge.points);
     }
 }
+
         function getRandomChallenge(type) {
             const challenges = challengeList[type];
             return challenges[Math.floor(Math.random() * challenges.length)];
@@ -660,7 +658,7 @@ function closeTimeUpModal() {
             } else if (points === 10) {
                 duration = 45;  // 45 secondi per sfide da 10 punti
             }
-		
+
             totalTime = duration;
             document.getElementById('timer-number').innerText = `${totalTime}s`;
 
@@ -679,6 +677,8 @@ function closeTimeUpModal() {
     returnToGameScreen();
 }
             }, 1000);
+        }
+
         function completeChallenge() {
             clearInterval(timerInterval);  // Ferma il timer
             points += currentChallenge.points;
@@ -721,6 +721,16 @@ function closeTimeUpModal() {
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
         }
+function triggerExplosion() {
+    const explosionDiv = document.createElement('div');
+    explosionDiv.classList.add('explosion');
+    document.body.appendChild(explosionDiv);
+
+    // Rimuovi l'elemento dopo l'animazione
+    setTimeout(() => {
+        explosionDiv.remove();
+    }, 1000); // Rimuove dopo 1 secondo
+} 
     </script>
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
     <audio id="audio-refuse" src="sfida_rifiutata.mp3"></audio>
