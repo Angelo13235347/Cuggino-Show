@@ -364,6 +364,13 @@
     </div>
 
     <script>
+function showCharacterSelection() {
+    // Nasconde la schermata di benvenuto
+    document.getElementById("welcome-screen").classList.add("hidden");
+    // Mostra la schermata di selezione personaggio
+    document.getElementById("character-screen").classList.remove("hidden");
+}
+	    
         let audioElement = new Audio();  // Crea un oggetto audio globale
 	function playSound(type) {
     let audioElement;
