@@ -661,7 +661,9 @@ function closeTimeUpModal() {
             } else if (points === 10) {
                 duration = 45;  // 45 secondi per sfide da 10 punti
             }
-
+    // Mostra la domanda quando il timer parte
+    document.getElementById("challenge").classList.remove("hidden");
+		
             totalTime = duration;
             document.getElementById('timer-number').innerText = `${totalTime}s`;
 
