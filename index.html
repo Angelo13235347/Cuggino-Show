@@ -626,14 +626,39 @@ function selectCharacter() {
     document.getElementById('game-screen').classList.add('hidden');
     document.getElementById('challenge-screen').classList.remove('hidden');
 
-    // Riproduce l'audio e poi avvia il timer
+		function loadChallenge() {
+    const challenge = getRandomChallenge(currentChallengeType);  
+    currentChallenge = challenge;
+
+    // Nascondi domande inizialmente
+    document.getElementById('challenge-title').innerText = '';
+    document.getElementById('challenge-description').innerText = '';
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('challenge-screen').classList.remove('hidden');
+
+    // Riproduce l'audio e imposta l'evento onended
     if (currentChallengeType === 'accept') {
         playAudioAndStartTimer('sfida_accettata.mp3', challenge.points);
     } else if (currentChallengeType === 'refuse') {
         playAudioAndStartTimer('sfida_rifiutata.mp3', challenge.points);
     } else if (currentChallengeType === 'destiny') {
         playAudioAndStartTimer('mettiti_in_gioco.mp3', challenge.points);
-    }
+      }
+
+    playAudioAndStartTimer(audioFile, challenge.points);
+}
+
+function playAudioAndStartTimer(audioFile, points) {
+    audioElement.pause();  
+    audioElement.src = audioFile;  
+    audioElement.play();  
+
+    audioElement.onended = function() {
+        // Mostra le domande solo quando l'audio termina
+        document.getElementById('challenge-title').innerText = currentChallenge.challenge;
+        document.getElementById('challenge-description').innerText = `Punti: ${currentChallenge.points}`;
+        startTimer(points);  
+    };
 }
 
         function getRandomChallenge(type) {
@@ -721,16 +746,6 @@ function closeTimeUpModal() {
         function closeCongratulations() {
             document.getElementById('congratulations-modal').style.display = 'none';
         }
-function triggerExplosion() {
-    const explosionDiv = document.createElement('div');
-    explosionDiv.classList.add('explosion');
-    document.body.appendChild(explosionDiv);
-
-    // Rimuovi l'elemento dopo l'animazione
-    setTimeout(() => {
-        explosionDiv.remove();
-    }, 1000); // Rimuove dopo 1 secondo
-} 
     </script>
 	<audio id="audio-accept" src="sfida_accettata.mp3"></audio>
     <audio id="audio-refuse" src="sfida_rifiutata.mp3"></audio>
