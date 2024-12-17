@@ -405,6 +405,8 @@ function playAudioAndStartTimer(audioFile, points) {
     audioElement.onended = function() {
         startTimer(points);  // Quando l'audio finisce, avvia il timer
     };
+	// Mostra la domanda quando il timer parte
+    document.getElementById("challenge").classList.remove("hidden");
 }
         let points = 0;
         let character = "";
@@ -638,7 +640,9 @@ function selectCharacter() {
         playAudioAndStartTimer('mettiti_in_gioco.mp3', challenge.points);
     }
 }
-
+// Mostra la domanda quando il timer parte
+    document.getElementById("challenge").classList.remove("hidden");
+	    
         function getRandomChallenge(type) {
             const challenges = challengeList[type];
             return challenges[Math.floor(Math.random() * challenges.length)];
@@ -661,8 +665,6 @@ function closeTimeUpModal() {
             } else if (points === 10) {
                 duration = 45;  // 45 secondi per sfide da 10 punti
             }
-    // Mostra la domanda quando il timer parte
-    document.getElementById("challenge").classList.remove("hidden");
 		
             totalTime = duration;
             document.getElementById('timer-number').innerText = `${totalTime}s`;
@@ -682,11 +684,6 @@ function closeTimeUpModal() {
     returnToGameScreen();
 }
             }, 1000);
-		
-		// Mostra la domanda quando il timer parte
-    document.getElementById("challenge").classList.remove("hidden");
-        }
-
         function completeChallenge() {
             clearInterval(timerInterval);  // Ferma il timer
             points += currentChallenge.points;
