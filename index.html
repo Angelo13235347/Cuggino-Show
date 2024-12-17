@@ -401,13 +401,6 @@ function playAudioAndStartTimer(audioFile, points) {
     audioElement.play();  // Riproduce il nuovo audio
     audioElement.onended = function() {
         startTimer(points);  // Quando l'audio finisce, avvia il timer
-
-        audioElement.onended = function() {
-        // Mostra le domande quando l'audio termina
-        document.getElementById('challenge-screen').classList.remove('hidden');
-        
-        // Avvia il timer dopo la visualizzazione delle domande
-        startTimer(points);  
     };
 }
         let points = 0;
