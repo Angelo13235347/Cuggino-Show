@@ -370,34 +370,35 @@ function createSnowflake() {
     snowflake.classList.add("snowflake");
     snowflake.textContent = "❄";
     snowflake.style.left = Math.random() * 100 + "vw";
-    snowflake.style.animationDuration = Math.random() * 5 + 5 + "s"; // Durata tra 5 e 10 secondi
+    snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
     snowflake.style.opacity = Math.random();
     document.body.appendChild(snowflake);
 
     setTimeout(() => {
         snowflake.remove();
-    }, 10000); // Mantieni il fiocco per 10 secondi
+    }, 5000);
 }
 
-// Intervallo più lungo per creare i fiocchi
-setInterval(createSnowflake, 500); 
+// Intervallo per creare fiocchi di neve
+setInterval(createSnowflake, 200);
 
 // Stile CSS per i fiocchi di neve
 const snowflakeStyle = document.createElement("style");
-.snowflake {
+snowflakeStyle.textContent = `
+  .snowflake {
     position: fixed;
     top: -2em;
     font-size: 2em;
     color: white;
     pointer-events: none;
     animation: fall linear infinite;
-}
+  }
 
-@keyframes fall {
+  @keyframes fall {
     to {
-        transform: translateY(100vh);
+      transform: translateY(100vh);
     }
-}
+  }
 `;
 document.head.appendChild(snowflakeStyle);
 	    
