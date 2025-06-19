@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuggi Show - Edizione Premium</title>
+    <title>Cuggi Show - Multiplayer Party</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --primary: #FF6B6B;
@@ -12,9 +13,6 @@
             --accent: #FFE66D;
             --dark: #292F36;
             --light: #F7FFF7;
-            --success: #6BCB77;
-            --warning: #FFD166;
-            --danger: #EF476F;
         }
 
         * {
@@ -25,147 +23,209 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #292F36, #1A1E23);
+            background: linear-gradient(135deg, #1A1A2E, #16213E);
             color: var(--light);
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Effetti particellari */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
         .container {
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        h1, h2, h3 {
+        h1, h2 {
             font-family: 'Fredoka One', cursive;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        h1 {
-            color: var(--accent);
-            font-size: 2.5rem;
+            text-align: center;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #FF6B6B, #FFE66D);
+            background: linear-gradient(to right, var(--accent), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        h2 {
-            color: var(--secondary);
-            font-size: 2rem;
-            margin-bottom: 15px;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
         }
 
-        h3 {
-            color: var(--primary);
-            font-size: 1.5rem;
+        video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--accent);
+        }
+
+        /* Modal per inserimento nome */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #292F36, #1A202C);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .input-group {
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
             margin-bottom: 10px;
+            color: var(--accent);
         }
 
-        p {
-            margin-bottom: 15px;
-            line-height: 1.6;
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
         }
 
-        /* Pulsanti */
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(255, 230, 109, 0.5);
+        }
+
         .button {
+            background: linear-gradient(45deg, var(--primary), #FF8E53);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin: 10px 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 15px 25px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px 5px;
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            min-width: 200px;
-        }
-
-        .button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2));
-            z-index: -1;
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-
-        .button:hover::before {
-            opacity: 1;
         }
 
         .button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
         }
 
         .button:active {
             transform: translateY(1px);
         }
 
-        .button.accept {
-            background: linear-gradient(45deg, var(--success), #4CAF50);
-            color: white;
-        }
-
-        .button.refuse {
-            background: linear-gradient(45deg, var(--danger), #EF476F);
-            color: white;
-        }
-
-        .button.destiny {
-            background: linear-gradient(45deg, var(--warning), #FFD166);
-            color: var(--dark);
-        }
-
-        .button.complete-challenge {
-            background: linear-gradient(45deg, #8E44AD, #9B59B6);
-            color: white;
-        }
-
-        .button.change-challenge {
-            background: linear-gradient(45deg, #6c757d, #495057);
-            color: white;
-        }
-
-        .button.start {
-            background: linear-gradient(45deg, var(--primary), var(--danger));
-            color: white;
-            font-size: 1.2rem;
-            padding: 18px 32px;
-        }
-
-        /* Icone pulsanti */
         .button i {
             margin-right: 10px;
+        }
+
+        .button.secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+
+        /* Sala d'attesa */
+        #waiting-room, #leaderboard {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .player-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .player {
+            background: linear-gradient(45deg, var(--secondary), #56C7C7);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .player i {
+            margin-right: 8px;
+        }
+
+        /* Classifica */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Codice stanza */
+        .room-code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px auto;
+            text-align: center;
             font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            border: 2px dashed var(--accent);
+            max-width: 300px;
+        }
+
+        .room-code span {
+            font-size: 1.5rem;
+            letter-spacing: 3px;
         }
 
         /* Schermate */
@@ -183,231 +243,30 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Video intro */
-        #intro-video {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            margin: 20px auto;
-            border: 4px solid var(--accent);
-        }
-
-        /* Selezione personaggio */
-        #character-select {
-            width: 100%;
-            max-width: 400px;
-            padding: 12px 20px;
-            border-radius: 50px;
-            border: none;
-            background-color: rgba(255,255,255,0.9);
-            font-size: 1rem;
-            margin: 20px auto;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 15px;
-        }
-
-        /* Timer */
-        #timer-container {
-            width: 100%;
-            max-width: 500px;
-            height: 30px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            margin: 30px auto;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        #timer-bar {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(90deg, var(--success), #4CAF50);
-            border-radius: 15px;
-            transition: width 1s linear;
-            position: relative;
-        }
-
-        #timer-number {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            font-size: 1rem;
-        }
-
-        /* Punti */
-        #points {
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 300px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-        }
-
-        /* Sfida */
-        #challenge-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        #challenge-title {
-            color: var(--accent);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        #challenge-points {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        /* Modali */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #2D3748, #1A202C);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            animation: modalIn 0.4s ease;
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .modal h3 {
-            color: var(--accent);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .modal p {
-            margin-bottom: 15px;
-        }
-
-        .modal .close {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 20px;
-            display: block;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .modal .close:hover {
-            background: #d23369;
-        }
-
-        /* Pulsante regolamento */
-        .help-button {
+        /* Notifiche */
+        .notification {
             position: fixed;
             bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), var(--danger));
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 10;
-            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .help-button:hover {
-            transform: scale(1.1) rotate(15deg);
-        }
-
-        /* Animazioni */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
+        .notification.show {
+            opacity: 1;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.5rem;
-            }
-            
-            .button {
-                padding: 12px 20px;
-                font-size: 1rem;
-                min-width: 160px;
-            }
-            
-            #intro-video {
-                max-width: 100%;
-            }
-            
-            .modal-content {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .container {
-                padding: 15px;
+                padding: 20px;
             }
             
             h1 {
@@ -419,527 +278,482 @@
                 margin: 8px 0;
             }
             
-            #character-select {
-                padding: 10px 15px;
+            .modal-content {
+                padding: 20px;
             }
-        }
-
-        /* Effetti speciali */
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent);
-            opacity: 0;
-            z-index: 999;
-            animation: confetti 5s ease-in-out;
-        }
-
-        @keyframes confetti {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Stile per il testo della sfida */
-        .challenge-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid var(--accent);
-        }
-
-        /* Stile per i pulsanti delle sfide */
-        .challenge-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        /* Effetto hover per i pulsanti delle sfide */
-        .challenge-button {
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .challenge-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Effetti particellari -->
-    <div class="particles" id="particles"></div>
-
-    <!-- Schermata di benvenuto -->
     <div class="container">
-        <div class="screen active" id="welcome-screen">
-            <h1><i class="fas fa-gamepad"></i> Cuggi Show Premium</h1>
-            <p>Preparati per un'esperienza di gioco incredibile! Guarda il video introduttivo prima di iniziare.</p>
+        <!-- Schermata iniziale -->
+        <div class="screen active" id="start-screen">
+            <h1><i class="fas fa-gamepad"></i> Cuggi Show Multiplayer</h1>
+            <p style="text-align: center;">Invita i tuoi amici e divertitevi insieme!</p>
             
-            <video id="intro-video" controls autoplay>
+            <video controls>
                 <source src="Lorenzo.mp4" type="video/mp4">
-                Il tuo browser non supporta il tag video.
+                Video non supportato
             </video>
             
-            <button class="button start pulse" onclick="showCharacterSelection()">
-                <i class="fas fa-play"></i> Inizia il Gioco
-            </button>
+            <div style="text-align: center;">
+                <button class="button" onclick="showJoinModal()">
+                    <i class="fas fa-sign-in-alt"></i> Unisciti a una Stanza
+                </button>
+                <button class="button" onclick="showCreateModal()">
+                    <i class="fas fa-plus"></i> Crea una Nuova Stanza
+                </button>
+            </div>
         </div>
 
-        <!-- Schermata di selezione personaggio -->
-        <div class="screen" id="character-screen">
-            <h1><i class="fas fa-user"></i> Scegli il tuo Personaggio</h1>
-            <p>Seleziona il tuo avatar per iniziare l'avventura!</p>
+        <!-- Sala d'attesa -->
+        <div class="screen" id="waiting-room">
+            <h2><i class="fas fa-users"></i> Sala d'Attesa</h2>
             
-            <select id="character-select">
-                <option value="Angelo">Angelo</option>
-                <option value="Matilde">Matilde</option>
-                <option value="Eleonora">Eleonora</option>
-                <option value="Rita">Rita</option>
-                <option value="Federico">Federico</option>
-                <option value="Rebecca">Rebecca</option>
-                <option value="Alessandro">Alessandro</option>
-                <option value="Francesco">Francesco</option>
-                <option value="Giulia">Giulia</option>
-            </select>
+            <div class="room-code" id="room-code-display">
+                Codice Stanza: <span id="room-code">ABCD</span>
+            </div>
             
-            <button class="button start" onclick="startGame()">
-                <i class="fas fa-check"></i> Conferma
-            </button>
+            <p>Condividi questo codice con i tuoi amici:</p>
+            <div style="text-align: center;">
+                <button class="button" onclick="copyRoomCode()">
+                    <i class="fas fa-copy"></i> Copia Codice
+                </button>
+                <button class="button secondary" onclick="shareRoomCode()">
+                    <i class="fas fa-share-alt"></i> Condividi
+                </button>
+            </div>
+            
+            <div class="player-list" id="players">
+                <!-- Giocatori verranno aggiunti qui -->
+            </div>
+            
+            <div id="host-controls" style="text-align: center; display: none;">
+                <button class="button" onclick="startGame()" id="start-game-btn">
+                    <i class="fas fa-play"></i> Inizia Partita
+                </button>
+            </div>
         </div>
 
-        <!-- Schermata di gioco principale -->
+        <!-- Classifica globale -->
+        <div class="screen" id="leaderboard">
+            <h2><i class="fas fa-trophy"></i> Classifica</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Posizione</th>
+                        <th>Giocatore</th>
+                        <th>Punti</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreboard">
+                    <!-- Classifica verrà popolata qui -->
+                </tbody>
+            </table>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="button" onclick="returnToLobby()">
+                    <i class="fas fa-undo"></i> Torna alla Lobby
+                </button>
+            </div>
+        </div>
+
+        <!-- Schermata di gioco -->
         <div class="screen" id="game-screen">
-            <h1 id="character-name"></h1>
-            <p>Scegli il tipo di sfida che vuoi affrontare:</p>
-            
-            <div class="challenge-buttons">
-                <button class="button accept challenge-button" onclick="acceptChallenge()">
-                    <i class="fas fa-check-circle"></i> Accetta la Sfida
-                </button>
-                
-                <button class="button refuse challenge-button" onclick="refuseChallenge()">
-                    <i class="fas fa-times-circle"></i> Rifiuta la Sfida
-                </button>
-                
-                <button class="button destiny challenge-button" onclick="destinyChallenge()">
-                    <i class="fas fa-star"></i> Mettiti alla Prova
-                </button>
-            </div>
-            
-            <div id="points">
-                <i class="fas fa-coins"></i> Punti: <span id="points-value">0</span> Dollari Lonziani
+            <h2 id="game-title"></h2>
+            <div id="game-container">
+                <!-- Il gioco verrà caricato qui -->
             </div>
         </div>
+    </div>
 
-        <!-- Schermata di sfida -->
-        <div class="screen" id="challenge-screen">
-            <h2><i class="fas fa-tasks"></i> Nuova Sfida!</h2>
+    <!-- Modal per inserimento nome -->
+    <div class="modal-overlay" id="name-modal" style="display: none;">
+        <div class="modal-content">
+            <h2><i class="fas fa-user-edit"></i> Come ti chiami?</h2>
             
-            <div id="challenge-card">
-                <h3 id="challenge-title"></h3>
-                <span id="challenge-points" class="pulse"></span>
-                
-                <div class="challenge-text" id="challenge-description"></div>
-                
-                <div id="timer-container">
-                    <div id="timer-bar"></div>
-                    <div id="timer-number">00</div>
-                </div>
-                
-                <div class="challenge-buttons">
-                    <button class="button complete-challenge challenge-button" onclick="completeChallenge()">
-                        <i class="fas fa-flag-checkered"></i> Completa
-                    </button>
-                    
-                    <button class="button change-challenge challenge-button" onclick="changeChallenge()">
-                        <i class="fas fa-sync-alt"></i> Cambia
-                    </button>
+            <div class="input-group">
+                <label for="player-name">Il tuo nome:</label>
+                <input type="text" id="player-name" placeholder="Es. Marco Rossi" maxlength="20">
+            </div>
+            
+            <div id="room-code-input" style="display: none;">
+                <div class="input-group">
+                    <label for="room-code-input-field">Codice Stanza:</label>
+                    <input type="text" id="room-code-input-field" placeholder="Inserisci il codice" maxlength="6">
                 </div>
             </div>
+            
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button class="button secondary" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Annulla
+                </button>
+                <button class="button" onclick="confirmName()">
+                    <i class="fas fa-check"></i> Conferma
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Pulsante regolamento -->
-    <div class="help-button" onclick="showRegulation()">
-        <i class="fas fa-question"></i>
-    </div>
+    <!-- Notifiche -->
+    <div class="notification" id="notification"></div>
 
-    <!-- Modale regolamento -->
-    <div class="modal" id="regulation-modal">
-        <div class="modal-content">
-            <h3><i class="fas fa-book"></i> Regolamento del Gioco</h3>
-            <p><strong>1. Scegli il tuo personaggio</strong>: Ogni giocatore deve scegliere un personaggio tra quelli disponibili.</p>
-            <p><strong>2. Tipi di sfide</strong>:</p>
-            <ul style="margin-left: 20px; margin-bottom: 15px;">
-                <li><strong>Accetta la sfida</strong>: Sfida media da 5 punti</li>
-                <li><strong>Rifiuta la sfida</strong>: Sfida semplice da 2 punti</li>
-                <li><strong>Mettiti alla prova</strong>: Sfida difficile da 10 punti</li>
-            </ul>
-            <p><strong>3. Tempo</strong>: Ogni sfida ha un tempo limitato in base alla difficoltà.</p>
-            <p><strong>4. Vincita</strong>: Il primo che raggiunge 50 punti vince!</p>
-            <button class="close" onclick="closeRegulation()">
-                <i class="fas fa-times"></i> Chiudi
-            </button>
-        </div>
-    </div>
-
-    <!-- Modale tempo scaduto -->
-    <div class="modal" id="time-up-modal">
-        <div class="modal-content">
-            <h3><i class="fas fa-clock"></i> Tempo Scaduto!</h3>
-            <p>Non sei riuscito a completare la sfida in tempo!</p>
-            <p>Prova ancora con una nuova sfida.</p>
-            <button class="close" onclick="closeTimeUpModal()">
-                <i class="fas fa-redo"></i> Riprova
-            </button>
-        </div>
-    </div>
-
-    <!-- Modale congratulazioni -->
-    <div class="modal" id="congratulations-modal">
-        <div class="modal-content">
-            <h3><i class="fas fa-trophy"></i> Congratulazioni, <span id="winner-name"></span>!</h3>
-            <p>Hai vinto con <span id="final-points"></span> punti!</p>
-            <p>Sei il campione del Cuggi Show!</p>
-            <button class="close" onclick="closeCongratulations()">
-                <i class="fas fa-check"></i> Fantastic!
-            </button>
-        </div>
-    </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // Variabili globali
-        let points = 0;
-        let character = "";
-        let currentChallenge = {};
-        let currentChallengeType = '';
-        let timerInterval;
-        let totalTime;
-        
-        // Lista delle sfide (come nel tuo codice originale)
-        const challengeList = {
-            accept: [
-                { "challenge": "Fai 20 salti consecutivi senza fermarti", "points": 5 },
-                { "challenge": "Danza per 1 minuto senza ripetere i movimenti", "points": 5 },
-                // ... (tutte le altre sfide come nel tuo codice)
-            ],
-            refuse: [
-                { "challenge": "Trova un oggetto blu nella stanza", "points": 2 },
-                { "challenge": "Conta da 1 a 20 senza fermarti", "points": 2 },
-                // ... (tutte le altre sfide come nel tuo codice)
-            ],
-            destiny: [
-                { "challenge": "Esegui 50 salti sul posto in meno di 1 minuto", "points": 10 },
-                { "challenge": "Memorizza e recita una frase di 20 parole lette solo una volta", "points": 10 },
-                // ... (tutte le altre sfide come nel tuo codice)
-            ]
+        // 1. Configurazione Firebase - SOSTITUISCI CON I TUOI DATI
+        const firebaseConfig = {
+            apiKey: "AIzaSyDDUK1ZEXAMPLEEXAMPLEEXAMPLE",
+            authDomain: "cuggishow-example.firebaseapp.com",
+            databaseURL: "https://cuggishow-example-default-rtdb.firebaseio.com",
+            projectId: "cuggishow-example",
+            storageBucket: "cuggishow-example.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abc123EXAMPLEEXAMPLE"
         };
 
-        // Inizializzazione
-        document.addEventListener('DOMContentLoaded', function() {
-            // Nascondi tutti gli elementi tranne la schermata di benvenuto
-            document.querySelectorAll('.screen').forEach(screen => {
-                if (!screen.classList.contains('active')) {
-                    screen.style.display = 'none';
-                }
-            });
-            
-            // Crea particelle decorative
-            createParticles();
-            
-            // Gestisci fine video intro
-            document.getElementById('intro-video').addEventListener('ended', function() {
-                this.style.display = 'none';
-            });
-        });
+        // 2. Inizializza Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-        // Funzione per creare particelle decorative
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 30 : 50;
+        // 3. Variabili di gioco
+        let playerName = "";
+        let playerId = "";
+        let isHost = false;
+        let roomCode = "";
+        let roomRef = null;
+        let playersRef = null;
+        let gameStateRef = null;
+
+        // 4. Genera un ID univoco per il giocatore
+        function generatePlayerId() {
+            return 'player-' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // 5. Genera un codice stanza casuale
+        function generateRoomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        // 6. Mostra notifica
+        function showNotification(message, duration = 3000) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
             
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.style.position = 'absolute';
-                particle.style.width = `${Math.random() * 5 + 2}px`;
-                particle.style.height = particle.style.width;
-                particle.style.backgroundColor = `hsl(${Math.random() * 60 + 180}, 70%, 60%)`;
-                particle.style.borderRadius = '50%';
-                particle.style.opacity = Math.random() * 0.5 + 0.1;
-                
-                // Posizione iniziale casuale
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                // Animazione
-                const duration = Math.random() * 20 + 10;
-                const delay = Math.random() * 5;
-                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
-                
-                particlesContainer.appendChild(particle);
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, duration);
+        }
+
+        // 7. Mostra modal per unirsi a stanza
+        function showJoinModal() {
+            document.getElementById('room-code-input').style.display = 'block';
+            document.getElementById('name-modal').style.display = 'flex';
+            document.getElementById('player-name').focus();
+        }
+
+        // 8. Mostra modal per creare stanza
+        function showCreateModal() {
+            document.getElementById('room-code-input').style.display = 'none';
+            document.getElementById('name-modal').style.display = 'flex';
+            document.getElementById('player-name').focus();
+        }
+
+        // 9. Chiudi modal
+        function closeModal() {
+            document.getElementById('name-modal').style.display = 'none';
+        }
+
+        // 10. Conferma nome e azione
+        function confirmName() {
+            const nameInput = document.getElementById('player-name');
+            playerName = nameInput.value.trim();
+            
+            if(playerName.length < 2) {
+                showNotification("Inserisci un nome valido (almeno 2 caratteri)");
+                return;
             }
             
-            // Aggiungi stile per l'animazione
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes float {
-                    0%, 100% {
-                        transform: translate(0, 0);
-                    }
-                    25% {
-                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px);
-                    }
-                    50% {
-                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px);
-                    }
-                    75% {
-                        transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px);
-                    }
+            playerId = generatePlayerId();
+            
+            // Se sta unendosi a una stanza esistente
+            if(document.getElementById('room-code-input').style.display === 'block') {
+                const codeInput = document.getElementById('room-code-input-field');
+                roomCode = codeInput.value.trim().toUpperCase();
+                
+                if(roomCode.length !== 6) {
+                    showNotification("Il codice stanza deve essere di 6 caratteri");
+                    return;
                 }
-            `;
-            document.head.appendChild(style);
+                
+                joinExistingRoom();
+            } 
+            // Se sta creando una nuova stanza
+            else {
+                isHost = true;
+                roomCode = generateRoomCode();
+                createNewRoom();
+            }
+            
+            closeModal();
         }
 
-        // Mostra selezione personaggio
-        function showCharacterSelection() {
-            document.getElementById('welcome-screen').classList.remove('active');
-            document.getElementById('welcome-screen').style.display = 'none';
+        // 11. Crea una nuova stanza
+        function createNewRoom() {
+            roomRef = database.ref('rooms/' + roomCode);
             
-            document.getElementById('character-screen').classList.add('active');
-            document.getElementById('character-screen').style.display = 'block';
-            
-            // Effetto confetti
-            createConfetti();
+            // Verifica se la stanza esiste già
+            roomRef.once('value').then(snapshot => {
+                if(snapshot.exists()) {
+                    showNotification("Errore: codice stanza già in uso");
+                    return;
+                }
+                
+                // Crea la stanza
+                roomRef.set({
+                    createdAt: firebase.database.ServerValue.TIMESTAMP,
+                    gameState: "waiting",
+                    hostId: playerId
+                });
+                
+                // Aggiungi il giocatore
+                playersRef = roomRef.child('players');
+                addPlayerToRoom();
+                
+                // Mostra sala d'attesa
+                showWaitingRoom();
+            });
         }
 
-        // Inizia il gioco
+        // 12. Unisciti a una stanza esistente
+        function joinExistingRoom() {
+            roomRef = database.ref('rooms/' + roomCode);
+            
+            // Verifica se la stanza esiste
+            roomRef.once('value').then(snapshot => {
+                if(!snapshot.exists()) {
+                    showNotification("Stanza non trovata");
+                    return;
+                }
+                
+                const roomData = snapshot.val();
+                if(roomData.gameState !== "waiting") {
+                    showNotification("La partita è già iniziata");
+                    return;
+                }
+                
+                // Unisciti alla stanza
+                playersRef = roomRef.child('players');
+                addPlayerToRoom();
+                
+                // Mostra sala d'attesa
+                showWaitingRoom();
+            });
+        }
+
+        // 13. Aggiungi giocatore alla stanza
+        function addPlayerToRoom() {
+            playersRef.child(playerId).set({
+                name: playerName,
+                points: 0,
+                isHost: isHost,
+                joinedAt: firebase.database.ServerValue.TIMESTAMP
+            });
+            
+            // Imposta listener per rimozione quando il giocatore esce
+            window.addEventListener('beforeunload', removePlayerFromRoom);
+        }
+
+        // 14. Rimuovi giocatore dalla stanza
+        function removePlayerFromRoom() {
+            if(playersRef && playerId) {
+                playersRef.child(playerId).remove();
+                
+                // Se era l'host e sta uscendo, elimina la stanza
+                if(isHost) {
+                    roomRef.remove();
+                }
+            }
+        }
+
+        // 15. Mostra sala d'attesa
+        function showWaitingRoom() {
+            document.getElementById('start-screen').classList.remove('active');
+            document.getElementById('waiting-room').classList.add('active');
+            document.getElementById('room-code').textContent = roomCode;
+            
+            if(isHost) {
+                document.getElementById('host-controls').style.display = 'block';
+            }
+            
+            // Ascolta cambiamenti nella lista giocatori
+            playersRef.on('value', updatePlayerList);
+            
+            // Ascolta cambiamenti nello stato del gioco
+            roomRef.child('gameState').on('value', snapshot => {
+                const gameState = snapshot.val();
+                if(gameState === "playing") {
+                    startGame();
+                } else if(gameState === "finished") {
+                    showLeaderboard();
+                }
+            });
+        }
+
+        // 16. Aggiorna lista giocatori
+        function updatePlayerList(snapshot) {
+            const playersDiv = document.getElementById('players');
+            playersDiv.innerHTML = '';
+            
+            const playersData = snapshot.val() || {};
+            
+            // Converti oggetto in array e ordina (host primo)
+            const playersArray = Object.entries(playersData).map(([id, player]) => ({
+                id,
+                ...player
+            })).sort((a, b) => b.isHost - a.isHost);
+            
+            playersArray.forEach(player => {
+                const playerEl = document.createElement('div');
+                playerEl.className = 'player';
+                playerEl.innerHTML = `
+                    <i class="fas ${player.isHost ? 'fa-crown' : 'fa-user'}"></i> 
+                    ${player.name} ${player.isHost ? '(Host)' : ''}
+                `;
+                playersDiv.appendChild(playerEl);
+            });
+            
+            // Abilita pulsante start se ci sono almeno 2 giocatori
+            if(isHost) {
+                document.getElementById('start-game-btn').disabled = Object.keys(playersData).length < 2;
+            }
+        }
+
+        // 17. Copia codice stanza
+        function copyRoomCode() {
+            navigator.clipboard.writeText(roomCode);
+            showNotification("Codice copiato negli appunti!");
+        }
+
+        // 18. Condividi codice stanza
+        function shareRoomCode() {
+            if(navigator.share) {
+                navigator.share({
+                    title: 'Unisciti al Cuggi Show!',
+                    text: `Usa questo codice per unirti alla mia stanza: ${roomCode}`,
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Errore condivisione:', err);
+                });
+            } else {
+                copyRoomCode();
+            }
+        }
+
+        // 19. Inizia il gioco (solo host)
         function startGame() {
-            character = document.getElementById('character-select').value;
-            document.getElementById('character-name').innerText = character;
-            
-            document.getElementById('character-screen').classList.remove('active');
-            document.getElementById('character-screen').style.display = 'none';
-            
-            document.getElementById('game-screen').classList.add('active');
-            document.getElementById('game-screen').style.display = 'block';
-            
-            // Mostra punti
-            document.getElementById('points').style.display = 'block';
-            
-            // Effetto confetti
-            createConfetti();
-        }
-
-        // Accetta sfida
-        function acceptChallenge() {
-            currentChallengeType = 'accept';
-            loadChallenge();
-            playSound('accept');
-        }
-
-        // Rifiuta sfida
-        function refuseChallenge() {
-            currentChallengeType = 'refuse';
-            loadChallenge();
-            playSound('refuse');
-        }
-
-        // Sfida destino
-        function destinyChallenge() {
-            currentChallengeType = 'destiny';
-            loadChallenge();
-            playSound('destiny');
-        }
-
-        // Carica sfida
-        function loadChallenge() {
-            const challenge = getRandomChallenge(currentChallengeType);
-            currentChallenge = challenge;
-
-            // Aggiorna UI
-            document.getElementById('challenge-title').innerText = challenge.challenge;
-            document.getElementById('challenge-description').innerText = challenge.challenge;
-            document.getElementById('challenge-points').innerText = `${challenge.points} Punti`;
-            
-            // Nascondi schermata gioco e mostra sfida
-            document.getElementById('game-screen').classList.remove('active');
-            document.getElementById('game-screen').style.display = 'none';
-            
-            document.getElementById('challenge-screen').classList.add('active');
-            document.getElementById('challenge-screen').style.display = 'block';
-            
-            // Avvia timer
-            startTimer(challenge.points);
-            
-            // Effetto confetti
-            createConfetti();
-        }
-
-        // Ottieni sfida casuale
-        function getRandomChallenge(type) {
-            const challenges = challengeList[type];
-            return challenges[Math.floor(Math.random() * challenges.length)];
-        }
-
-        // Avvia timer
-        function startTimer(points) {
-            let duration;
-            if (points === 2) {
-                duration = 15;  // 15 secondi per sfide da 2 punti
-            } else if (points === 5) {
-                duration = 30;  // 30 secondi per sfide da 5 punti
-            } else if (points === 10) {
-                duration = 45;  // 45 secondi per sfide da 10 punti
-            }
-
-            totalTime = duration;
-            document.getElementById('timer-number').innerText = `${totalTime}s`;
-            document.getElementById('timer-bar').style.width = '100%';
-
-            timerInterval = setInterval(function() {
-                duration--;
-                document.getElementById('timer-number').innerText = `${duration}s`;
-                const barWidth = (duration / totalTime) * 100;
-                document.getElementById('timer-bar').style.width = `${barWidth}%`;
-
-                // Cambia colore in base al tempo rimanente
-                if (duration <= totalTime * 0.3) {
-                    document.getElementById('timer-bar').style.background = 'linear-gradient(90deg, var(--danger), #EF476F)';
-                } else if (duration <= totalTime * 0.6) {
-                    document.getElementById('timer-bar').style.background = 'linear-gradient(90deg, var(--warning), #FFD166)';
-                }
-
-                if (duration <= 0) {
-                    clearInterval(timerInterval);
-                    showTimeUpModal();
-                }
-            }, 1000);
-        }
-
-        // Completa sfida
-        function completeChallenge() {
-            clearInterval(timerInterval);
-            points += currentChallenge.points;
-            document.getElementById('points-value').innerText = points;
-            
-            // Torna alla schermata di gioco
-            document.getElementById('challenge-screen').classList.remove('active');
-            document.getElementById('challenge-screen').style.display = 'none';
-            
-            document.getElementById('game-screen').classList.add('active');
-            document.getElementById('game-screen').style.display = 'block';
-            
-            // Controlla se ha vinto
-            checkForWinner();
-            
-            // Effetto confetti
-            createConfetti();
-        }
-
-        // Cambia sfida
-        function changeChallenge() {
-            clearInterval(timerInterval);
-            
-            // Torna alla schermata di gioco
-            document.getElementById('challenge-screen').classList.remove('active');
-            document.getElementById('challenge-screen').style.display = 'none';
-            
-            document.getElementById('game-screen').classList.add('active');
-            document.getElementById('game-screen').style.display = 'block';
-        }
-
-        // Controlla vincitore
-        function checkForWinner() {
-            if (points >= 50) {
-                showCongratulations();
-            }
-        }
-
-        // Mostra regolamento
-        function showRegulation() {
-            document.getElementById('regulation-modal').style.display = 'flex';
-        }
-
-        // Chiudi regolamento
-        function closeRegulation() {
-            document.getElementById('regulation-modal').style.display = 'none';
-        }
-
-        // Mostra tempo scaduto
-        function showTimeUpModal() {
-            document.getElementById('time-up-modal').style.display = 'flex';
-        }
-
-        // Chiudi tempo scaduto
-        function closeTimeUpModal() {
-            document.getElementById('time-up-modal').style.display = 'none';
-            changeChallenge();
-        }
-
-        // Mostra congratulazioni
-        function showCongratulations() {
-            document.getElementById('winner-name').innerText = character;
-            document.getElementById('final-points').innerText = points;
-            document.getElementById('congratulations-modal').style.display = 'flex';
-            
-            // Grande effetto confetti
-            for (let i = 0; i < 100; i++) {
-                createConfetti();
-            }
-        }
-
-        // Chiudi congratulazioni
-        function closeCongratulations() {
-            document.getElementById('congratulations-modal').style.display = 'none';
-        }
-
-        // Crea effetto confetti
-        function createConfetti() {
-            const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#6BCB77', '#EF476F'];
-            
-            for (let i = 0; i < 20; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = `${Math.random() * 100}%`;
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.width = `${Math.random() * 10 + 5}px`;
-                confetti.style.height = confetti.style.width;
-                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            if(isHost) {
+                // Aggiorna stato gioco
+                roomRef.update({
+                    gameState: "playing",
+                    startTime: firebase.database.ServerValue.TIMESTAMP
+                });
                 
-                document.body.appendChild(confetti);
+                // Nascondi lobby e mostra gioco
+                document.getElementById('waiting-room').classList.remove('active');
+                document.getElementById('game-screen').classList.add('active');
+                document.getElementById('game-title').textContent = `Stanza: ${roomCode}`;
                 
-                // Rimuovi dopo l'animazione
-                setTimeout(() => {
-                    confetti.remove();
-                }, 5000);
+                // Carica il gioco (qui puoi integrare il tuo gioco esistente)
+                loadGame();
             }
         }
 
-        // Riproduci suono
-        function playSound(type) {
-            const sounds = {
-                'accept': 'https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3',
-                'refuse': 'https://assets.mixkit.co/sfx/preview/mixkit-arcade-retro-game-over-213.mp3',
-                'destiny': 'https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3',
-                'win': 'https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'
-            };
-            
-            const audio = new Audio(sounds[type]);
-            audio.play().catch(e => console.log("Audio non riprodotto:", e));
+        // 20. Carica il gioco
+        function loadGame() {
+            const gameContainer = document.getElementById('game-container');
+            gameContainer.innerHTML = `
+                <div style="text-align: center; margin: 30px 0;">
+                    <h3>Il gioco è iniziato!</h3>
+                    <p>Qui verrà caricato il tuo gioco...</p>
+                    <button class="button" onclick="finishGame()" style="margin-top: 20px;">
+                        <i class="fas fa-flag-checkered"></i> Termina Partita (Demo)
+                    </button>
+                </div>
+            `;
         }
+
+        // 21. Termina il gioco (demo)
+        function finishGame() {
+            if(isHost) {
+                // Assegna punti casuali per la demo
+                playersRef.once('value').then(snapshot => {
+                    const players = snapshot.val();
+                    const updates = {};
+                    
+                    Object.keys(players).forEach(playerId => {
+                        updates[`${playerId}/points`] = Math.floor(Math.random() * 100);
+                    });
+                    
+                    playersRef.update(updates, () => {
+                        roomRef.update({
+                            gameState: "finished",
+                            endTime: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    });
+                });
+            }
+        }
+
+        // 22. Mostra classifica
+        function showLeaderboard() {
+            playersRef.once('value').then(snapshot => {
+                const playersData = snapshot.val() || {};
+                const playersArray = Object.values(playersData).sort((a, b) => b.points - a.points);
+                
+                const tbody = document.getElementById('scoreboard');
+                tbody.innerHTML = '';
+                
+                playersArray.forEach((player, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${player.name} ${player.isHost ? '👑' : ''}</td>
+                        <td>${player.points}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                document.getElementById('game-screen').classList.remove('active');
+                document.getElementById('leaderboard').classList.add('active');
+            });
+        }
+
+        // 23. Torna alla lobby
+        function returnToLobby() {
+            if(isHost) {
+                roomRef.update({
+                    gameState: "waiting"
+                });
+            }
+            
+            document.getElementById('leaderboard').classList.remove('active');
+            document.getElementById('waiting-room').classList.add('active');
+        }
+
+        // 24. Riduci dimensione video
+        document.querySelector('video').addEventListener('loadedmetadata', function() {
+            this.currentTime = 10;
+        });
     </script>
 </body>
 </html>
